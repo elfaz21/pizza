@@ -70,8 +70,12 @@ const PopularPizza = () => {
   return (
     <div className="relative mt-24 px-14" style={gradientBackground}>
       <h1
-        className="text-2xl font-semi-bold text-left mt-14 ml-14"
-        style={{ fontSize: "50px", color: "#00000080", margin: "50px 40px" }}
+        className="text-2xl font-semi-bold text-left mt-14"
+        style={{
+          fontSize: "2.5rem", // Adjusted for larger screens
+          color: "#00000080",
+          margin: "50px 0",
+        }}
       >
         Popular Pizza
       </h1>
