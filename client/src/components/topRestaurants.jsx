@@ -1,4 +1,5 @@
 import React from "react";
+import bbb from "../assets/bbbb.png"; // Import your restaurant profile image
 import restaurantProfile from "../assets/restourantProfile.svg"; // Import your restaurant profile image
 
 const TopRestorant = () => {
@@ -73,7 +74,7 @@ const TopRestorant = () => {
                 }}
               >
                 <img
-                  src={restaurantProfile}
+                  src={bbb}
                   alt=""
                   className="object-cover w-50 h-50 rounded-full"
                 />
