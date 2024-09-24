@@ -58,7 +58,15 @@ const PopularPizza = () => {
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
+      price: "150",
+      currency: "Birr",
+      image: pizzaImage2,
+      restaurant: "Pizza Palace",
+    },
+    {
+      name: "Margherita Pizza",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "150",
       currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
@@ -70,25 +78,26 @@ const PopularPizza = () => {
     <div className="relative mt-24" style={gradientBackground}>
       <h1
         className="text-2xl font-semi-bold text-left mt-14 ml-14"
-        style={{ fontSize: "50px", color: "#00000080", margin: "50px 150px" }}
+        style={{ fontSize: "50px", color: "#00000080", margin: "50px 0" }}
       >
         Popular Pizza
       </h1>
 
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-5 mt-14 "
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-14"
         style={{
-          margin: "50px 150px",
+          margin: "0 15px",
         }}
       >
         {pizzas.map((pizza, index) => (
           <div
             key={index}
-            className="bg-white shadow-md rounded-md flex flex-col justify-center items-center"
+            className="bg-white shadow-md rounded-md flex flex-col justify-center items-center p-4"
             style={{
               maxWidth: "400px",
               maxHeight: "900px",
               borderRadius: "25px",
+              margin: "10px auto",
             }}
           >
             <img
@@ -96,11 +105,9 @@ const PopularPizza = () => {
               alt={pizza.name}
               className="object-cover rounded-full mb-2"
               style={{
-                width: "300px",
-                height: "300px",
+                width: "200px", // Decreased size for mobile
+                height: "200px", // Decreased size for mobile
                 borderRadius: "50%",
-                fontSize: "50px",
-                marginTop: "10px",
                 backgroundColor: "#FF8100",
               }}
             />
@@ -116,7 +123,6 @@ const PopularPizza = () => {
               <p className="text-sm text-gray-600">{pizza.ingredients}</p>
               <div className="flex items-center justify-between mt-2">
                 <div className="flex">
-                  {" "}
                   <h1
                     className="font-bold mr-2"
                     style={{
@@ -132,7 +138,7 @@ const PopularPizza = () => {
                 <button
                   className="text-white"
                   style={{
-                    padding: "10px 40px",
+                    padding: "10px 20px", // Adjusted padding for button
                     borderRadius: "10px",
                     fontSize: "20px",
                     backgroundColor: "#FF8100",

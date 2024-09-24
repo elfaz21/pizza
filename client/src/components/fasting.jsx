@@ -1,5 +1,4 @@
 import React from "react";
-
 import pizzaImage2 from "../assets/piza2.svg";
 import restaurantProfile from "../assets/restourantProfile.svg";
 
@@ -20,34 +19,6 @@ const Fasting = () => {
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
-    {
-      name: "Margherita Pizza",
-      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
-      image: pizzaImage2,
-      restaurant: "Pizza Palace",
-    },
-    {
-      name: "Margherita Pizza",
-      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
-      image: pizzaImage2,
-      restaurant: "Pizza Palace",
-    },
-    {
-      name: "Margherita Pizza",
-      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
-      image: pizzaImage2,
-      restaurant: "Pizza Palace",
-    },
-    {
-      name: "Margherita Pizza",
-      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
-      image: pizzaImage2,
-      restaurant: "Pizza Palace",
-    },
     // Add more pizza objects here for additional cards
   ];
 
@@ -55,20 +26,16 @@ const Fasting = () => {
     <div className="relative mt-24" style={gradientBackground}>
       <h1
         className="text-2xl font-semi-bold text-left mt-14 ml-14"
-        style={{ fontSize: "50px", color: "#00000080", margin: "50px 150px" }}
+        style={{ fontSize: "50px", color: "#00000080", margin: "50px 0" }}
       >
         Fasting
       </h1>
 
       <div
-        className="flex justify-start gap-5 mt-14 overflow-x-auto z-50"
+        className="flex flex-wrap justify-start gap-5 mt-14 overflow-hidden z-50"
         style={{
-          marginLeft: "130px",
+          marginLeft: "15px", // Adjusted for better alignment
           padding: "20px 0",
-          whiteSpace: "nowrap",
-          overflowY: "hidden",
-          scrollbarWidth: "none",
-          "-ms-overflow-style": "none",
         }}
       >
         {pizzas.map((pizza, index) => (
@@ -78,8 +45,9 @@ const Fasting = () => {
             style={{
               width: cardWidth + "px",
               flex: "0 0 auto",
-              margin: "0 10px",
+              margin: "10px",
               borderRadius: "25px",
+              maxWidth: "100%", // Make card responsive
             }}
           >
             <img
@@ -87,14 +55,17 @@ const Fasting = () => {
               alt={pizza.name}
               className="object-cover rounded-full mb-2"
               style={{
-                width: "300px",
-                height: "300px",
+                width: "80%", // Responsive image width
+                height: "auto", // Maintain aspect ratio
+                maxWidth: "300px", // Limit max width
                 borderRadius: "50%",
                 marginTop: "10px",
                 backgroundColor: "#FF8100",
               }}
             />
-            <div className="text-left mt-5">
+            <div className="text-left mt-5 px-4">
+              {" "}
+              {/* Added padding */}
               <h1
                 className="text-base font-bold mb-1"
                 style={{ fontSize: "25px" }}
@@ -112,7 +83,7 @@ const Fasting = () => {
                 <button
                   className="text-white"
                   style={{
-                    padding: "10px 40px",
+                    padding: "10px 20px", // Adjusted for mobile
                     borderRadius: "10px",
                     fontSize: "1rem",
                     backgroundColor: "#FF8100",
