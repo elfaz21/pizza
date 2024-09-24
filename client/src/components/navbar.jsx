@@ -10,20 +10,14 @@ function Navbar() {
   };
 
   return (
-    <nav className="w-full bg-transparent z-50">
-      <div className="px-10 lg:px-10 py-2 flex justify-between items-center">
-        <div className="logo">
-          <Link to="/" className="flex items-center">
-            <img src={logo} className="w-30" alt="" />
-          </Link>
-        </div>
-        <button
-          id="menu-toggle"
-          onClick={toggleMenu}
-          className="lg:hidden text-black focus:outline-none"
-        >
+    <nav className="bg-white shadow-lg">
+      <div className="container mx-auto px-4 lg:px-10 py-4 flex justify-between items-center">
+        <Link to="/" className="flex items-center">
+          <img src={logo} className="w-24" alt="Logo" />
+        </Link>
+        <button onClick={toggleMenu} className="lg:hidden focus:outline-none">
           <svg
-            className="h-6 w-6"
+            className="h-6 w-6 text-gray-800"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -37,26 +31,16 @@ function Navbar() {
             />
           </svg>
         </button>
-        <ul
-          className={`font-bold text-base sm:text-lg font-arial flex gap-24 items-center lg:gap-20 transition-all duration-300 ease-in-out ${
-            isMenuOpen ? "block" : "hidden"
-          } lg:flex`}
-          style={{
-            fontSize: "18px",
-          }}
-        >
+        <ul className={`hidden lg:flex lg:gap-20 items-center`}>
           <li>
-            <Link
-              to="/"
-              className="hover:text-orange-500 active:text-orange-500"
-            >
+            <Link to="/" className="nav-link font-bold hover:text-orange-500">
               Home
             </Link>
           </li>
           <li>
             <Link
               to="/orders"
-              className="hover:text-orange-500 active:text-orange-500"
+              className="nav-link font-bold hover:text-orange-500"
             >
               Orders
             </Link>
@@ -64,27 +48,53 @@ function Navbar() {
           <li>
             <Link
               to="/who-we-are"
-              className="hover:text-orange-500 active:text-orange-500"
+              className="nav-link font-bold hover:text-orange-500"
             >
               Who we are
             </Link>
           </li>
         </ul>
-        <Link to="/register">
-          <button
-            style={{
-              backgroundColor: "#FF890F",
-              color: "#fff",
-              fontSize: "16px",
-              padding: "8px 25px",
-              borderRadius: "5px",
-              border: "none",
-            }}
-          >
-            Register
-          </button>
-        </Link>
+
+        {window.innerWidth > 768 && (
+          <Link to="/register">
+            <button
+              className="text-white"
+              style={{
+                padding: "10px 40px",
+                borderRadius: "4px",
+                fontSize: "20px",
+                backgroundColor: "#FF8100",
+              }}
+            >
+              Register
+            </button>
+          </Link>
+        )}
       </div>
+      {isMenuOpen && (
+        <ul className="lg:hidden text-white absolute t-10 z-50 right-5 rounded-lg w-64 h-30 flex flex-col items-center bg-black py-4">
+          <li>
+            <Link to="/" className="nav-link" onClick={toggleMenu}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/orders" className="nav-link" onClick={toggleMenu}>
+              Orders
+            </Link>
+          </li>
+          <li>
+            <Link to="/who-we-are" className="nav-link" onClick={toggleMenu}>
+              Who we are
+            </Link>
+          </li>
+          <li>
+            <Link to="/register" className="btn-register" onClick={toggleMenu}>
+              Register
+            </Link>
+          </li>
+        </ul>
+      )}
       <Outlet />
     </nav>
   );

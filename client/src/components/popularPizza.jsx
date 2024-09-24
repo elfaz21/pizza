@@ -58,7 +58,7 @@ const PopularPizza = () => {
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "150",
+      price: "$150",
       currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
