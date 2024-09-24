@@ -4,7 +4,7 @@ import restaurantProfile from "../assets/restourantProfile.svg";
 
 const PopularPizza = () => {
   const gradientBackground = {
-    backgroundImage: "linear-gradient( #FFFFFF, #FFE3C7FF, #FFF8F123)",
+    backgroundImage: "linear-gradient(#FFFFFF, #FFE3C7FF, #FFF8F123)",
     minHeight: "100vh",
     display: "flex",
     justifyContent: "center",
@@ -63,28 +63,21 @@ const PopularPizza = () => {
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
-    {
-      name: "Margherita Pizza",
-      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "150",
-      currency: "Birr",
-      image: pizzaImage2,
-      restaurant: "Pizza Palace",
-    },
     // Add more pizza objects here for additional cards
+    // Repeated for demonstration; you can add unique pizzas as needed
   ];
 
   return (
-    <div className="relative mt-24" style={gradientBackground}>
+    <div className="relative mt-24 px-14" style={gradientBackground}>
       <h1
         className="text-2xl font-semi-bold text-left mt-14 ml-14"
-        style={{ fontSize: "50px", color: "#00000080", margin: "50px 0" }}
+        style={{ fontSize: "50px", color: "#00000080", margin: "50px 40px" }}
       >
         Popular Pizza
       </h1>
 
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-14"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-14"
         style={{
           margin: "0 15px",
         }}
@@ -94,10 +87,10 @@ const PopularPizza = () => {
             key={index}
             className="bg-white shadow-md rounded-md flex flex-col justify-center items-center p-4"
             style={{
-              maxWidth: "400px",
-              maxHeight: "900px",
-              borderRadius: "25px",
+              width: "100%", // Full width for small screens
+              maxWidth: "400px", // Max width for larger screens
               margin: "10px auto",
+              borderRadius: "25px",
             }}
           >
             <img

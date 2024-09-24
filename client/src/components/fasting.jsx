@@ -9,9 +9,45 @@ const Fasting = () => {
     backgroundSize: "100% 100%",
   };
 
-  const cardWidth = 400; // Fixed width for each card
+  const cardWidth = 400; // Default width for each card
+  const mobileCardWidth = 300; // Width for mobile devices
 
   const pizzas = [
+    {
+      name: "Margherita Pizza",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "$150",
+      image: pizzaImage2,
+      restaurant: "Pizza Palace",
+    },
+    {
+      name: "Margherita Pizza",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "$150",
+      image: pizzaImage2,
+      restaurant: "Pizza Palace",
+    },
+    {
+      name: "Margherita Pizza",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "$150",
+      image: pizzaImage2,
+      restaurant: "Pizza Palace",
+    },
+    {
+      name: "Margherita Pizza",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "$150",
+      image: pizzaImage2,
+      restaurant: "Pizza Palace",
+    },
+    {
+      name: "Margherita Pizza",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "$150",
+      image: pizzaImage2,
+      restaurant: "Pizza Palace",
+    },
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
@@ -25,17 +61,19 @@ const Fasting = () => {
   return (
     <div className="relative mt-24" style={gradientBackground}>
       <h1
-        className="text-2xl font-semi-bold text-left mt-14 ml-14"
-        style={{ fontSize: "50px", color: "#00000080", margin: "50px 0" }}
+        className="text-2xl font-semi-bold text-left mt-14 ml-24"
+        style={{ fontSize: "50px", color: "#00000080", margin: "50px 40px" }}
       >
         Fasting
       </h1>
 
       <div
-        className="flex flex-wrap justify-start gap-5 mt-14 overflow-hidden z-50"
+        className="flex overflow-x-auto mt-14 z-50"
         style={{
-          marginLeft: "15px", // Adjusted for better alignment
           padding: "20px 0",
+          scrollbarWidth: "none", // Hide scrollbar in Firefox
+          "-ms-overflow-style": "none", // Hide scrollbar in IE and Edge
+          paddingLeft: window.innerWidth >= 1024 ? "20px" : "0", // Add left padding on large screens
         }}
       >
         {pizzas.map((pizza, index) => (
@@ -43,11 +81,13 @@ const Fasting = () => {
             key={index}
             className="card bg-white shadow-md rounded-md flex flex-col justify-center items-center"
             style={{
-              width: cardWidth + "px",
+              width:
+                window.innerWidth < 768
+                  ? mobileCardWidth + "px"
+                  : cardWidth + "px", // Responsive width
               flex: "0 0 auto",
-              margin: "10px",
+              margin: "0 10px",
               borderRadius: "25px",
-              maxWidth: "100%", // Make card responsive
             }}
           >
             <img
@@ -64,8 +104,6 @@ const Fasting = () => {
               }}
             />
             <div className="text-left mt-5 px-4">
-              {" "}
-              {/* Added padding */}
               <h1
                 className="text-base font-bold mb-1"
                 style={{ fontSize: "25px" }}
