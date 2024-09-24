@@ -4,7 +4,7 @@ import restaurantProfile from "../assets/restourantProfile.svg";
 
 const PopularPizza = () => {
   const gradientBackground = {
-    backgroundImage: "linear-gradient(#FFF0E023, #FFE3C7FF, #FFF0E023)",
+    backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFF0E023)",
     minHeight: "100vh",
     display: "flex",
     justifyContent: "center",
