@@ -18,7 +18,7 @@ const TopRestorant = () => {
   };
 
   return (
-    <div className="relative mt-24 p-5" style={gradientBackground}>
+    <div className="relative mt-24 py-5" style={gradientBackground}>
       <h1
         className="text-2xl font-semi-bold text-left mt-14 ml-14"
         style={{ fontSize: "50px", color: "#00000080" }}

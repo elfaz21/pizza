@@ -18,42 +18,48 @@ const PopularPizza = () => {
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
+      price: "150",
+      currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
+      price: "150",
+      currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
+      price: "150",
+      currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
+      price: "150",
+      currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
+      price: "150",
+      currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
     {
       name: "Margherita Pizza",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
-      price: "$150",
+      price: "150",
+      currency: "Birr",
       image: pizzaImage2,
       restaurant: "Pizza Palace",
     },
@@ -109,15 +115,20 @@ const PopularPizza = () => {
               </h1>
               <p className="text-sm text-gray-600">{pizza.ingredients}</p>
               <div className="flex items-center justify-between mt-2">
-                <h1
-                  className="font-bold mr-2"
-                  style={{
-                    color: "#01C550",
-                    fontSize: "45px",
-                  }}
-                >
-                  {pizza.price}
-                </h1>
+                <div className="flex">
+                  {" "}
+                  <h1
+                    className="font-bold mr-2"
+                    style={{
+                      color: "#01C550",
+                      fontSize: "45px",
+                    }}
+                  >
+                    {pizza.price}
+                  </h1>
+                  <p className="mt-2">{pizza.currency}</p>
+                </div>
+
                 <button
                   className="text-white"
                   style={{
