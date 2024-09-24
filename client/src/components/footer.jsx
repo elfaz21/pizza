@@ -50,9 +50,11 @@ const Footer = () => {
 
       <div className="bg-black text-white p-6">
         <div className="container mx-auto flex items-center justify-between px-4">
-          <div>
-            <p>@2024 Pizza All Rights Reserved. Terms & Conditions</p>
+          <div className="flex gap-10">
+            <p>@2024 Pizza All Rights Reserved.</p>
+            <p>Terms & Conditions</p>
           </div>
+
           <div className="flex gap-4">
             <a href="#" className="text-white">
               <FaFacebook />
