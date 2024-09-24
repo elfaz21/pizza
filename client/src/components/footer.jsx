@@ -11,8 +11,8 @@ const Footer = () => {
   return (
     <>
       <footer className="text-white py-8" style={{ background: "#CCB691" }}>
-        <div className="container mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full flex gap-10 sm:w-1/2 lg:w-1/4 text-center md:text-left text-black">
+        <div className="container mx-auto flex flex-wrap items-center justify-between px-4">
+          <div className="w-full flex flex-col sm:flex-row sm:w-1/2 lg:w-1/4 text-center gap-5 md:text-left text-black">
             <Link
               to="/"
               className="text-xl font-bold mb-4 hover:text-orange-500"
@@ -48,8 +48,8 @@ const Footer = () => {
         </div>
       </footer>
 
-      <div className="bg-black text-white py-10">
-        <div className="container mx-auto flex items-center justify-between">
+      <div className="bg-black text-white p-6">
+        <div className="container mx-auto flex items-center justify-between px-4">
           <div>
             <p>@2024 Pizza All Rights Reserved. Terms & Conditions</p>
           </div>
