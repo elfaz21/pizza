@@ -24,7 +24,10 @@ const RegistrationComponent = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="w-full h-screen flex">
-        <div className="w-1/2 bg-orange-500 rounded-l-lg p-8 hidden md:flex items-center justify-center">
+        <div
+          className="w-1/2 rounded-l-lg p-8 hidden md:flex items-center justify-center"
+          style={{ background: "#FF9921" }}
+        >
           <img
             src={logoImage}
             alt="Registration Image"

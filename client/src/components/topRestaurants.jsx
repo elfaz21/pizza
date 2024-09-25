@@ -1,14 +1,43 @@
-import React from "react";
-import bbb from "../assets/bbbb.png"; // Import your restaurant profile image
-import restaurantProfile from "../assets/restourantProfile.svg"; // Import your restaurant profile image
+import React, { useEffect } from "react";
+import bbb from "../assets/bbbb.png";
+import restaurantProfile from "../assets/restourantProfile.svg";
 
 const TopRestorant = () => {
-  const gradientBackground = {
-    backgroundImage: "linear-gradient(#FFFFFF, #FBE4CDFF, #FFF8F143)",
-    height: "100%",
-    backgroundSize: "100% 100%",
-    overflow: "hidden", // Hide vertical scrollbar
-  };
+  useEffect(() => {
+    const container = document.querySelector(".scroll-container");
+
+    if (container) {
+      const scrollWidth = container.scrollWidth - container.clientWidth;
+      const cardWidth = container.querySelector(".flex").offsetWidth;
+      const clonedCards = container.querySelectorAll(".flex").length;
+
+      const cloneCards = () => {
+        for (let i = 0; i < clonedCards; i++) {
+          const clone = container.children[i].cloneNode(true);
+          container.appendChild(clone);
+        }
+      };
+
+      const scrollStep = 1; // Adjust the scroll step as needed
+      let scrollPos = 0;
+      let intervalId;
+
+      const scroll = () => {
+        scrollPos += scrollStep;
+        if (scrollPos >= scrollWidth + cardWidth) {
+          scrollPos = 0;
+          container.scrollLeft = 0;
+        } else {
+          container.scrollLeft = scrollPos;
+        }
+      };
+
+      cloneCards(); // Clone cards for seamless loop
+      intervalId = setInterval(scroll, 10); // Auto-scroll every 10ms
+
+      return () => clearInterval(intervalId);
+    }
+  }, []);
 
   const cardStyle = {
     flex: "0 0 auto",
@@ -18,22 +47,20 @@ const TopRestorant = () => {
   };
 
   return (
-    <div className="relative mt-24 py-5" style={gradientBackground}>
+    <div
+      className="relative mt-24 py-5"
+      style={{
+        backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFF0E023)",
+      }}
+    >
       <h1
-        className="text-2xl font-semi-bold text-left mt-14 ml-14"
+        className="text-2xl font-semibold text-left mt-14 ml-14"
         style={{ fontSize: "50px", color: "#00000080" }}
       >
         Top Restaurants
       </h1>
-      <div
-        className="flex p-4 mt-4 items-center"
-        style={{
-          overflowX: "auto",
-          scrollbarWidth: "none",
-          "-ms-overflow-style": "none",
-        }}
-      >
-        {[1, 2, 3].map((item) => (
+      <div className="flex p-4 mt-4 items-center overflow-x-hidden scrollbar-hidden scroll-container">
+        {[1, 2, 3, 4].map((item) => (
           <div
             key={item}
             className="flex bg-white rounded-lg shadow-md"
