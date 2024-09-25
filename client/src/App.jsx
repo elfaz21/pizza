@@ -5,6 +5,7 @@ import { MyContext } from "./context/Context";
 import Home from "./pages/home";
 import RegistrationComponent from "./components/registration";
 import LoginComponent from "./components/login";
+import PizzaPage from "./pages/detail";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<RegistrationComponent />} />
           <Route path="/login" element={<LoginComponent />} />
+          <Route path="/detail" element={<PizzaPage />} />
         </Routes>
       </BrowserRouter>
     </MyContext.Provider>

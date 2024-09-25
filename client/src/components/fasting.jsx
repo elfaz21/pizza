@@ -1,5 +1,5 @@
 import React from "react";
-import pizzaImage2 from "../assets/piza2.svg";
+import pizzaImage2 from "../assets/piz1.svg";
 import restaurantProfile from "../assets/restourantProfile.svg";
 
 const Fasting = () => {

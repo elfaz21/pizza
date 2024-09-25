@@ -105,7 +105,10 @@ const FeaturedPizzaCarousel = () => {
           >
             <img src={cardImage1} alt="Pizza" style={{ ...imageStyle }} />
             <div>
-              <h3 style={titleStyle}>Make Your First Order and Get 50% Off</h3>
+              <h3 style={titleStyle}>
+                Make Your First Order and Get
+                <span style={{ color: "#FF9921" }}> 50% Off</span>
+              </h3>
               <p style={descriptionStyle}>
                 In publishing and graphic design, Lorem ipsum is a placeholder
                 text commonly used to demonstrate the visual form of a document
@@ -125,7 +128,10 @@ const FeaturedPizzaCarousel = () => {
           >
             <img src={cardImage2} alt="Pizza" style={{ ...imageStyle }} />
             <div>
-              <h3 style={titleStyle}>Special Deal: Buy One, Get One Free!</h3>
+              <h3 style={titleStyle}>
+                Make Your First Order and Get
+                <span style={{ color: "#FF9921" }}> 50% Off</span>
+              </h3>
               <p style={descriptionStyle}>
                 In publishing and graphic design, Lorem ipsum is a placeholder
                 text commonly used to demonstrate the visual form of a document
@@ -145,7 +151,10 @@ const FeaturedPizzaCarousel = () => {
           >
             <img src={cardImage3} alt="Pizza" style={{ ...imageStyle }} />
             <div>
-              <h3 style={titleStyle}>Try Our New Flavor: Spicy Margherita</h3>
+              <h3 style={titleStyle}>
+                Make Your First Order and Get
+                <span style={{ color: "#FF9921" }}> 50% Off</span>
+              </h3>
               <p style={descriptionStyle}>
                 In publishing and graphic design, Lorem ipsum is a placeholder
                 text commonly used to demonstrate the visual form of a document

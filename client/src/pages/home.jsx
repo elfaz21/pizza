@@ -15,6 +15,7 @@ function Home() {
       <TopRestorant />
       <PopularPizza />
       <Fasting />
+
       <Footer />
     </div>
   );

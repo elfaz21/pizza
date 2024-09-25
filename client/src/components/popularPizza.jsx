@@ -1,5 +1,6 @@
 import React from "react";
-import pizzaImage2 from "../assets/piza2.svg";
+import { Link } from "react-router-dom";
+import pizzaImage2 from "../assets/piz1.svg";
 import restaurantProfile from "../assets/restourantProfile.svg";
 
 const PopularPizza = () => {
@@ -131,18 +132,19 @@ const PopularPizza = () => {
                   </h1>
                   <p className="mt-2">{pizza.currency}</p>
                 </div>
-
-                <button
-                  className="text-white"
-                  style={{
-                    padding: "10px 20px", // Adjusted padding for button
-                    borderRadius: "10px",
-                    fontSize: "20px",
-                    backgroundColor: "#FF8100",
-                  }}
-                >
-                  Order
-                </button>
+                <Link to="/detail">
+                  <button
+                    className="text-white"
+                    style={{
+                      padding: "10px 20px", // Adjusted padding for button
+                      borderRadius: "10px",
+                      fontSize: "20px",
+                      backgroundColor: "#FF8100",
+                    }}
+                  >
+                    Order
+                  </button>
+                </Link>
               </div>
             </div>
             <hr className="mt-3 w-full" />
