@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import pizzaImage2 from "../assets/piz1.svg";
-import restaurantProfile from "../assets/restourantProfile.svg";
+import Navbar from "../components/navbar";
 
-const PopularPizza = () => {
+const Orders = () => {
   const gradientBackground = {
     backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFF0E023)",
     minHeight: "100vh",
@@ -15,75 +14,100 @@ const PopularPizza = () => {
     overflow: "hidden",
   };
 
+  const getStatusColor = (status) => {
+    if (status === "Received") {
+      return "#01C550"; // Green color for Received
+    } else if (status === "Ordered") {
+      return "#FF8100"; // Orange color for Ordered
+    }
+    return "#000"; // Default color
+  };
+
   const pizzas = [
     {
-      name: "Margherita Pizza",
+      name: "Margherita",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
       price: "150",
       currency: "Birr",
       image: pizzaImage2,
-      restaurant: "Pizza Palace",
+      status: "Received",
     },
     {
-      name: "Margherita Pizza",
+      name: "Margherita",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
       price: "150",
       currency: "Birr",
       image: pizzaImage2,
-      restaurant: "Pizza Palace",
+      status: "Ordered",
     },
     {
-      name: "Margherita Pizza",
+      name: "Margherita",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
       price: "150",
       currency: "Birr",
       image: pizzaImage2,
-      restaurant: "Pizza Palace",
+      status: "Received",
     },
     {
-      name: "Margherita Pizza",
+      name: "Margherita",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
       price: "150",
       currency: "Birr",
       image: pizzaImage2,
-      restaurant: "Pizza Palace",
+      status: "Ordered",
     },
     {
-      name: "Margherita Pizza",
+      name: "Margherita",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
       price: "150",
       currency: "Birr",
       image: pizzaImage2,
-      restaurant: "Pizza Palace",
+      status: "Received",
     },
     {
-      name: "Margherita Pizza",
+      name: "Margherita",
       ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
       price: "150",
       currency: "Birr",
       image: pizzaImage2,
-      restaurant: "Pizza Palace",
+      status: "Ordered",
+    },
+    {
+      name: "Margherita",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "150",
+      currency: "Birr",
+      image: pizzaImage2,
+      status: "Received",
+    },
+    {
+      name: "Margherita",
+      ingredients: "Tomato, Mozzarella, Bell Peppers, Onions, Olives",
+      price: "150",
+      currency: "Birr",
+      image: pizzaImage2,
+      status: "Ordered",
     },
     // Add more pizza objects here for additional cards
-    // Repeated for demonstration; you can add unique pizzas as needed
   ];
 
   return (
-    <div className="relative mt-24 px-14" style={gradientBackground}>
+    <div className="relative px-14" style={gradientBackground}>
+      <Navbar />
       <h1
-        className="text-2xl font-semi-bold text-left mt-14"
+        className="text-2xl font-semi-bold text-left m-10"
         style={{
-          fontSize: "2.5rem", // Adjusted for larger screens
+          fontSize: "2.5rem",
           color: "#00000080",
-          margin: "50px 50px",
+          margin: "50px 20px",
           fontWeight: "bold",
         }}
       >
-        Popular Pizza
+        Order History
       </h1>
 
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-14"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mt-14"
         style={{
           margin: "0 15px",
         }}
@@ -93,8 +117,8 @@ const PopularPizza = () => {
             key={index}
             className="bg-white shadow-md rounded-md flex flex-col justify-center items-center p-4"
             style={{
-              width: "100%", // Full width for small screens
-              maxWidth: "380px", // Max width for larger screens
+              width: "100%",
+              maxWidth: "400px",
               margin: "10px auto",
               borderRadius: "25px",
             }}
@@ -104,8 +128,8 @@ const PopularPizza = () => {
               alt={pizza.name}
               className="object-cover rounded-full mb-2"
               style={{
-                width: "200px", // Decreased size for mobile
-                height: "200px", // Decreased size for mobile
+                width: "200px",
+                height: "200px",
                 borderRadius: "50%",
                 backgroundColor: "#FF8100",
               }}
@@ -120,7 +144,7 @@ const PopularPizza = () => {
                 {pizza.name}
               </h1>
               <p className="text-sm text-gray-600">{pizza.ingredients}</p>
-              <div className="flex items-center justify-between mt-5">
+              <div className="flex items-center justify-between mt-2">
                 <div className="flex">
                   <h1
                     className="font-bold mr-2"
@@ -133,36 +157,20 @@ const PopularPizza = () => {
                   </h1>
                   <p className="mt-2">{pizza.currency}</p>
                 </div>
-                <Link to="/detail">
-                  <button
-                    className="text-white"
-                    style={{
-                      padding: "10px 20px", // Adjusted padding for button
-                      borderRadius: "10px",
-                      fontSize: "20px",
-                      backgroundColor: "#FF8100",
-                    }}
-                  >
-                    Order
-                  </button>
-                </Link>
+
+                <h1
+                  className="text-white"
+                  style={{
+                    padding: "10px 20px",
+                    borderRadius: "10px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    color: getStatusColor(pizza.status), // Change color based on status
+                  }}
+                >
+                  {pizza.status}
+                </h1>
               </div>
-            </div>
-            <hr className="mt-3 w-full" />
-            <div className="flex items-center px-10 my-4 justify-between w-full">
-              <img
-                src={restaurantProfile}
-                alt="Restaurant Profile"
-                className="w-14 h-14 object-cover rounded-full mr-1"
-              />
-              <h2
-                className="text-xs font-bold"
-                style={{
-                  fontSize: "20px",
-                }}
-              >
-                {pizza.restaurant}
-              </h2>
             </div>
           </div>
         ))}
@@ -171,4 +179,4 @@ const PopularPizza = () => {
   );
 };
 
-export default PopularPizza;
+export default Orders;

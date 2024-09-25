@@ -10,7 +10,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav style={{ background: " #FFE3C700" }}>
       <div className="container mx-auto px-4 lg:px-10 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <img src={logo} className="w-24" alt="Logo" />

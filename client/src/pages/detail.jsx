@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { FaShoppingCart } from "react-icons/fa"; // Importing the order icon
-import pizza1 from "../assets/piz1.svg"; // Replace with your pizza image paths
+import { FaShoppingCart } from "react-icons/fa";
+import pizza1 from "../assets/piz1.svg";
 import pizza2 from "../assets/piz2.svg";
 import pizza3 from "../assets/piz3.svg";
+import Navbar from "../components/navbar";
+import orderIcon from "../assets/orderIcon.svg";
 
 const PizzaPage = () => {
   const [quantity, setQuantity] = useState(1);
@@ -30,37 +32,37 @@ const PizzaPage = () => {
 
   const pizzas = [
     {
-      name: "Margherita Pizza",
+      name: "Margherita",
       description:
         "A classic pizza topped with fresh tomatoes, mozzarella cheese, and fragrant basil.",
       image: pizza1,
     },
     {
-      name: "Pepperoni Pizza",
+      name: "Pepperoni",
       description:
         "A popular favorite, loaded with spicy pepperoni slices and gooey mozzarella.",
       image: pizza2,
     },
     {
-      name: "BBQ Chicken Pizza",
+      name: "BBQ Chicken",
       description:
         "Savory BBQ chicken, red onions, and cilantro on a base of melted cheese.",
       image: pizza3,
     },
     {
-      name: "Vegetarian Pizza",
+      name: "Vegetarian",
       description:
         "A colorful medley of fresh vegetables, including bell peppers, onions, and olives.",
       image: pizza1,
     },
     {
-      name: "Hawaiian Pizza",
+      name: "Hawaiian",
       description:
         "A delicious combination of ham, pineapple, and cheese for a sweet and savory experience.",
       image: pizza2,
     },
     {
-      name: "Four Cheese Pizza",
+      name: "Four Cheese",
       description:
         "Rich and creamy, topped with mozzarella, cheddar, blue cheese, and goat cheese.",
       image: pizza3,
@@ -72,12 +74,13 @@ const PizzaPage = () => {
     <div
       className="flex flex-col  "
       style={{
-        background: "#FFE2C57E",
+        backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFF0E023)",
       }}
     >
+      <Navbar />
       <div className="flex gap-6 px-20">
         {/* Left Side: Pizza Images */}
-        <div className="flex gap-10 mt-10">
+        <div className="flex gap-10">
           <img src={pizza1} alt="Pizza 1" className="w-full rounded-lg " />
           <div className="flex flex-col mt-20 gap-16">
             <img src={pizza2} alt="Pizza 2" className="w-full rounded-lg " />
@@ -86,7 +89,7 @@ const PizzaPage = () => {
         </div>
 
         {/* Right Side: Pizza Details */}
-        <div className="flex-1 mt-24 pl-20">
+        <div className="flex-1 mt-24 pl-24">
           <h2 className="font-bold text-gray-800" style={{ fontSize: "80px" }}>
             Margherita
           </h2>
@@ -169,9 +172,12 @@ const PizzaPage = () => {
             <span className="text-1xl font-semibold text-black-600">Birr</span>
           </div>
 
-          <button className="mt-6 flex items-center justify-between bg-orange-500 text-white rounded-lg px-8 py-3 hover:bg-orange-600 transition w-64">
+          <button
+            className="mt-6 flex items-center justify-between bg-orange-500 text-white rounded-lg px-10 py-4 hover:bg-orange-600 transition"
+            style={{ width: "420px" }}
+          >
             Order
-            <FaShoppingCart className="mr-2" />
+            <img src={orderIcon} alt="" />
           </button>
         </div>
       </div>
@@ -182,6 +188,7 @@ const PizzaPage = () => {
           className="text-2xl font-semi-bold text-left"
           style={{
             fontSize: "50px",
+            fontWeight: "bold",
             color: "#00000080",
             margin: "0 94px",
             marginTop: "20px",

@@ -2,9 +2,9 @@ import FeaturedPizzaCarousel from "../components/caroselSlider";
 import Fasting from "../components/fasting";
 import Footer from "../components/footer";
 import HeroSection from "../components/hero";
-import Navbar from "../components/navbar";
 import PopularPizza from "../components/popularPizza";
 import TopRestorant from "../components/topRestaurants";
+import Navbar from "../components/navbar";
 
 function Home() {
   return (

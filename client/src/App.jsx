@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import RegistrationComponent from "./components/registration";
 import LoginComponent from "./components/login";
 import PizzaPage from "./pages/detail";
+import Orders from "./pages/orders";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/register" element={<RegistrationComponent />} />
           <Route path="/login" element={<LoginComponent />} />
           <Route path="/detail" element={<PizzaPage />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </BrowserRouter>
     </MyContext.Provider>
