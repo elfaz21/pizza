@@ -1,37 +1,62 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const adminUserSchema = new mongoose.Schema({
   adminName: {
     type: String,
-    required: true,
+    required: false,
+  },
+  restaurantId: {
+    type: String,
+    required: false,
+  },
+  name: {
+    type: String,
+    required: false,
+  },
+  role: {
+    type: String,
+    required: false,
   },
   phoneNo: {
     type: Number,
-    required: true,
+    required: false,
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
   password: {
     type: String,
-    required: true,
+    required: false,
+  },
+  confirmPassword: {
+    type: String,
+    required: false,
   },
   restaurantName: {
     type: String,
-    required: true,
+    required: false,
   },
   location: {
     type: String,
-    required: true,
+    required: false,
   },
+
   imageUrl: {
     type: String,
-    required: true,
+    required: false,
+  },
+  termsAccepted: {
+    type: Boolean,
+    required: false,
+  },
+  isActive: {
+    type: Boolean,
+    required: false,
   },
 });
 
-const Users = mongoose.model("users", userSchema);
+const Admins = mongoose.model("admins", adminUserSchema);
 
-module.exports = Users;
+module.exports = Admins;

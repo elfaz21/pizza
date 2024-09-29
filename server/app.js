@@ -4,8 +4,12 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 const userRoutes = require("./routes/userRoute");
-const bookRoutes = require("./routes/bookRoute");
-const blogRoute = require("./routes/blogRoute");
+// const bookRoutes = require("./routes/bookRoute");
+const menuRoute = require("./routes/menuRoute");
+const clientUser = require("./routes/clientUserRoute");
+
+const orderRoute = require("./routes/ordersRoute");
+const roleRoute = require("./routes/roleRoute");
 
 dotenv.config();
 
@@ -15,8 +19,10 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", userRoutes);
-app.use("/api", bookRoutes);
-app.use("/api", blogRoute);
+app.use("/api", clientUser);
+app.use("/api", menuRoute);
+app.use("/api", roleRoute);
+app.use("/api", orderRoute);
 
 // Connect to MongoDB using the environment variable
 mongoose

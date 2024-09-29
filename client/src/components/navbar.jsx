@@ -1,16 +1,23 @@
-import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import logo from "../assets/logo.svg";
+import { MyContext } from "../context/Context"; // Make sure to adjust the import according to your setup
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoggedIn, logout } = useContext(MyContext); // Extract logout function from context
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLogout = () => {
+    navigate("/login");
+  };
+
   return (
-    <nav style={{ background: " #FFE3C700" }}>
+    <nav style={{ background: "#FFE3C700" }}>
       <div className="container mx-auto px-4 lg:px-10 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <img src={logo} className="w-24" alt="Logo" />
@@ -55,21 +62,36 @@ function Navbar() {
           </li>
         </ul>
 
-        {window.innerWidth > 768 && (
-          <Link to="/register">
+        {window.innerWidth > 768 ? (
+          isLoggedIn ? (
             <button
+              onClick={handleLogout}
               className="text-white"
               style={{
                 padding: "10px 40px",
                 borderRadius: "4px",
                 fontSize: "20px",
-                backgroundColor: "#FF8100",
+                backgroundColor: "#000000FF",
               }}
             >
-              Register
+              Logout
             </button>
-          </Link>
-        )}
+          ) : (
+            <Link to="/register">
+              <button
+                className="text-white"
+                style={{
+                  padding: "10px 40px",
+                  borderRadius: "4px",
+                  fontSize: "20px",
+                  backgroundColor: "#FF8100",
+                }}
+              >
+                Register
+              </button>
+            </Link>
+          )
+        ) : null}
       </div>
       {isMenuOpen && (
         <ul className="lg:hidden text-white absolute t-10 z-50 right-5 rounded-lg w-64 h-30 flex flex-col items-center bg-black py-4">
@@ -88,11 +110,34 @@ function Navbar() {
               Who we are
             </Link>
           </li>
-          <li>
-            <Link to="/register" className="btn-register" onClick={toggleMenu}>
-              Register
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="text-white"
+              style={{
+                padding: "10px 40px",
+                borderRadius: "4px",
+                fontSize: "20px",
+                backgroundColor: "#000000FF",
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link to="/register">
+              <button
+                className="text-white"
+                style={{
+                  padding: "10px 40px",
+                  borderRadius: "4px",
+                  fontSize: "20px",
+                  backgroundColor: "#FF8100",
+                }}
+              >
+                Register
+              </button>
             </Link>
-          </li>
+          )}
         </ul>
       )}
       <Outlet />

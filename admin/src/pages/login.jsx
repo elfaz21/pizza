@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import {
   TextField,
   Button,
-  createTheme,
   Checkbox,
   FormControlLabel,
   ThemeProvider,
 } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { createTheme } from "@mui/material/styles";
+import { MyContext } from "../context/Context"; // Import MyContext if it's defined in a separate file
 import logo from "../assets/logo.svg";
 import logoImage from "../assets/logoImage.svg";
-import { Link } from "react-router-dom";
+import { z } from "zod"; // Import Zod for validation
 
 const theme = createTheme({
   palette: {
@@ -19,7 +22,45 @@ const theme = createTheme({
   },
 });
 
+// Define Zod validation schema
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+});
+
 const LoginComponent = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { setUserId, setIsLoggedIn } = useContext(MyContext);
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({}); // State to store validation errors
+
+  const handleLogin = async () => {
+    // Validate inputs
+    try {
+      loginSchema.parse({ email, password }); // Validate using Zod
+      const response = await axios.post("http://localhost:8001/api/login", {
+        email,
+        password,
+      });
+      navigate("/");
+      setUserId(response.data.id);
+      setIsLoggedIn(true);
+      console.log("Login successful");
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Handle validation errors
+        const fieldErrors = {};
+        error.errors.forEach((err) => {
+          fieldErrors[err.path[0]] = err.message; // Set error messages by field
+        });
+        setErrors(fieldErrors);
+      } else {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="w-full h-screen flex">
@@ -28,7 +69,7 @@ const LoginComponent = () => {
             src={logoImage}
             alt="login Image"
             className="mx-auto"
-            style={{ width: "200px", height: "200px" }} // Adjust the width and height here
+            style={{ width: "200px", height: "200px" }}
           />
         </div>
         <div className="w-full md:w-1/2 bg-white rounded-r-lg shadow-lg p-8">
@@ -38,7 +79,6 @@ const LoginComponent = () => {
               fontSize: "2rem",
               color: "#333",
               textAlign: "left",
-
               marginLeft: "20px",
             }}
           >
@@ -51,6 +91,13 @@ const LoginComponent = () => {
               className="custom-textfield"
               type="email"
               required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors((prev) => ({ ...prev, email: undefined })); // Clear error on change
+              }}
+              error={!!errors.email} // Show error state
+              helperText={errors.email} // Display error message
             />
             <TextField
               label="Password"
@@ -58,6 +105,13 @@ const LoginComponent = () => {
               className="custom-textfield"
               type="password"
               required
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrors((prev) => ({ ...prev, password: undefined })); // Clear error on change
+              }}
+              error={!!errors.password} // Show error state
+              helperText={errors.password} // Display error message
             />
             <FormControlLabel
               control={<Checkbox color="orange" />}
@@ -68,13 +122,14 @@ const LoginComponent = () => {
               variant="contained"
               color="primary"
               fullWidth
-              className="mb-4"
+              className="mb-4 py-6"
               style={{ backgroundColor: "#FF8100", color: "white" }}
+              onClick={handleLogin}
             >
               Login
             </Button>
             <p className="mt-4 text-center text-gray-600">
-              don't have an account?{" "}
+              Don't have an account?{" "}
               <Link to="/register" className="text-orange-500">
                 Register
               </Link>

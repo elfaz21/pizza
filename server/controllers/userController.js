@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../models/userModel");
+const Admins = require("../models/userModel");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
@@ -29,7 +29,7 @@ const nodemailer = require("nodemailer");
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email, password });
+    const user = await Admins.findOne({ email, password });
 
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
@@ -102,20 +102,20 @@ const forgetPassword = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const { email, password, name, imageUrl } = req.body;
+  const { email, password } = req.body;
 
-  if (!name || !email || !password || !imageUrl) {
+  if (!email || !password) {
     return res
       .status(400)
       .json({ message: "Please enter all required fields." });
   }
 
   try {
-    const user = await User.create(req.body);
+    const user = await Admins.create(req.body);
     res.status(200).json({ message: "User created successfully", user });
   } catch (error) {
     if (error.code === 11000 && error.keyPattern && error.keyPattern.email) {
-      res.status(400).json({
+      res.status(401).json({
         message: "This user already exists. Would you like to login instead?",
       });
     } else {
@@ -126,7 +126,7 @@ const createUser = async (req, res) => {
 };
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await Admins.find({});
     res.status(200).json(users);
   } catch (error) {
     console.log(error.message);
@@ -137,7 +137,7 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id);
+    const user = await Admins.findById(id);
     if (!user) {
       return res.status(404).json({ message: "user not found" });
     }
@@ -151,7 +151,7 @@ const getUserById = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id, req.body, {
+    const user = await Admins.findByIdAndUpdate(id, req.body, {
       new: true,
     });
 
@@ -170,7 +170,7 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findByIdAndDelete(id);
+    const user = await Admins.findByIdAndDelete(id);
     if (!user) {
       return res.status(404).json({ message: "user not found" });
     }

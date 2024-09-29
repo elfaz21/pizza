@@ -59,7 +59,7 @@ const TopRestorant = () => {
       >
         Top Restaurants
       </h1>
-      <div className="flex p-4 mt-4 items-center overflow-x-hidden scrollbar-hidden scroll-container">
+      <div className="flex p-2 mt-4 items-center overflow-x-hidden scrollbar-hidden scroll-container">
         {[1, 2, 3, 4].map((item) => (
           <div
             key={item}

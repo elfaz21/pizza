@@ -20,7 +20,7 @@ const Footer = () => {
               Home
             </Link>
             <Link
-              to="/order"
+              to="/orders"
               className="text-xl font-bold mb-4 hover:text-orange-500"
             >
               Order

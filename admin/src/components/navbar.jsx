@@ -1,20 +1,45 @@
+import React, { useState, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
-import logo from "../assets/logo.svg";
+import { FaBell, FaUser } from "react-icons/fa";
+import { MyContext } from "../context/Context";
+import axios from "axios";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const { userId } = useContext(MyContext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8001/api/users/${userId}`
+        );
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+        // Handle error
+      }
+    };
+
+    if (userId) {
+      fetchData();
+    }
+  }, [userId]);
+
   return (
-    <nav className="w-full bg-transparent z-50">
-      <div className="px-10 lg:px-10 py-2 flex justify-between items-center">
-        <div className="logo">
-          <Link to="/" className="flex items-center">
-            <img src={logo} className="w-30" alt="" />
+    <nav className="w-full bg-white z-50 h-20 flex items-center">
+      <div className="px-10 flex justify-between items-center w-full">
+        <div className="flex items-center h-full">
+          <Link
+            to="/add-menu"
+            className="ml-64 font-bold text-lg hover:text-orange-500 active:text-orange-500 flex items-center h-full"
+          >
+            Add Menu
           </Link>
         </div>
         <button
@@ -41,49 +66,24 @@ function Navbar() {
           className={`font-bold text-base sm:text-lg font-arial flex gap-24 items-center lg:gap-20 transition-all duration-300 ease-in-out ${
             isMenuOpen ? "block" : "hidden"
           } lg:flex`}
-          style={{
-            fontSize: "18px",
-          }}
+          style={{ fontSize: "18px" }}
         >
-          <li>
-            <Link
-              to="/"
-              className="hover:text-orange-500 active:text-orange-500"
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/about"
-              className="hover:text-orange-500 active:text-orange-500"
-            >
-              Orders
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/blog"
-              className="hover:text-orange-500 active:text-orange-500"
-            >
-              Who we are
-            </Link>
-          </li>
+          {/* Other menu items can be added here if needed */}
         </ul>
-        <Link to="/register">
-          <button
-            style={{
-              backgroundColor: "#FF890F",
-              color: "#fff",
-              fontSize: "16px",
-              padding: "8px 25px",
-              borderRadius: "5px",
-              border: "none",
-            }}
-          >
-            Register
-          </button>
-        </Link>
+        <div className="flex items-center">
+          <FaBell className="text-xl mr-4 text-black" />
+          {user && user.imageUrl ? (
+            <img
+              src={user.imageUrl}
+              alt="User Profile"
+              className="h-10 w-10 rounded-full"
+            />
+          ) : (
+            <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+              <FaUser className="text-xl text-black" />
+            </div>
+          )}
+        </div>
       </div>
       <Outlet />
     </nav>

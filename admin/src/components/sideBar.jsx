@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import { BiPackage, BiMenu, BiUser, BiLogOut } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import {
+  FaPizzaSlice,
+  FaClipboardList,
+  FaPlus,
+  FaUserShield,
+  FaUsers,
+  FaSignOutAlt,
+} from "react-icons/fa"; // Updated imports
+import { NavLink } from "react-router-dom"; // Change Link to NavLink
 import logoImage from "../assets/logoImage.svg";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [activeLink, setActiveLink] = useState("Orders");
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const handleSetActiveLink = (link) => {
-    setActiveLink(link);
-  };
-
-  const dashbordStyle = {
-    backgroundColor: "#ccc",
+  const dashboardStyle = {
+    backgroundColor: "#fff",
     zIndex: 50,
     color: "black",
     height: "100vh",
@@ -31,8 +33,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div style={dashbordStyle}>
-      <div className="p-4 flex items-center justify-between">
+    <div className="z-50" style={dashboardStyle}>
+      <div className="p-4 z-50 flex items-center justify-between">
         <span className={`text-2xl font-bold ${isCollapsed ? "hidden" : ""}`}>
           Pizza
         </span>
@@ -40,7 +42,8 @@ const Sidebar = () => {
           className="text-black focus:outline-none"
           onClick={toggleSidebar}
         >
-          <BiMenu />
+          <FaPizzaSlice style={{ color: "#FF8100" }} />{" "}
+          {/* Changed hamburger icon to a pizza slice icon */}
         </button>
       </div>
 
@@ -55,57 +58,61 @@ const Sidebar = () => {
       <div
         className={`flex flex-col space-y-2 ${isCollapsed ? "collapsed" : ""}`}
       >
-        <Link
-          to="orders"
-          className={`p-4 hover:bg-orange-100 flex items-center ${
-            activeLink === "Orders" ? "text-orange-500 bg-orange-200" : ""
-          }`}
-          onClick={() => handleSetActiveLink("Orders")}
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `p-4 hover:bg-orange-100 flex items-center ${
+              isActive ? "text-orange-500 bg-orange-200" : ""
+            }`
+          }
         >
-          <BiPackage className="w-6 h-6 mr-2" />
+          <FaClipboardList className="w-6 h-6 mr-2" /> {/* Icon for Orders */}
           {isCollapsed ? null : "Orders"}
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/add-menu"
-          className={`p-4 hover:bg-orange-100 flex items-center ${
-            activeLink === "Add Menu" ? "text-orange-500 bg-orange-200" : ""
-          }`}
-          onClick={() => handleSetActiveLink("Add Menu")}
+          className={({ isActive }) =>
+            `p-4 hover:bg-orange-100 flex items-center ${
+              isActive ? "text-orange-500 bg-orange-200" : ""
+            }`
+          }
         >
-          <BiMenu className="w-6 h-6 mr-2" />
+          <FaPlus className="w-6 h-6 mr-2" /> {/* Icon for Add Menu */}
           {isCollapsed ? null : "Add Menu"}
-        </Link>
-        <Link
-          to="role"
-          className={`p-4 hover:bg-orange-100 flex items-center ${
-            activeLink === "Role User" ? "text-orange-500 bg-orange-200" : ""
-          }`}
-          onClick={() => handleSetActiveLink("Role User")}
+        </NavLink>
+        <NavLink
+          to="/add-role"
+          className={({ isActive }) =>
+            `p-4 hover:bg-orange-100 flex items-center ${
+              isActive ? "text-orange-500 bg-orange-200" : ""
+            }`
+          }
         >
-          <BiUser className="w-6 h-6 mr-2" />
-          {isCollapsed ? null : "Role User"}
-        </Link>
-        <Link
-          to="user"
-          className={`p-4 hover:bg-orange-100 flex items-center ${
-            activeLink === "user" ? "text-orange-500 bg-orange-200" : ""
-          }`}
-          onClick={() => handleSetActiveLink("user")}
+          <FaUserShield className="w-6 h-6 mr-2" /> {/* Icon for Role */}
+          {isCollapsed ? null : "Role"}
+        </NavLink>
+        <NavLink
+          to="/users"
+          className={({ isActive }) =>
+            `p-4 hover:bg-orange-100 flex items-center ${
+              isActive ? "text-orange-500 bg-orange-200" : ""
+            }`
+          }
         >
-          <BiUser className="w-6 h-6 mr-2" />
+          <FaUsers className="w-6 h-6 mr-2" /> {/* Icon for Users */}
           {isCollapsed ? null : "User"}
-        </Link>
+        </NavLink>
       </div>
 
-      <Link
-        to="/logout"
+      <NavLink
+        to="/login"
         className={`mt-auto p-4 border-t border-gray-300 hover:bg-orange-100 flex items-center ${
           isCollapsed ? "collapsed" : ""
         }`}
       >
-        <BiLogOut className="w-6 h-6 mr-2" />
+        <FaSignOutAlt className="w-6 h-6 mr-2" /> {/* Icon for Logout */}
         {isCollapsed ? null : "Logout"}
-      </Link>
+      </NavLink>
     </div>
   );
 };
