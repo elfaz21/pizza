@@ -39,10 +39,13 @@ const LoginComponent = () => {
     // Validate inputs
     try {
       loginSchema.parse({ email, password }); // Validate using Zod
-      const response = await axios.post("http://localhost:8001/api/logins", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://pizza-server-30q1.onrender.com/api/logins",
+        {
+          email,
+          password,
+        }
+      );
       navigate("/");
       setUserId(response.data.id);
       setIsLoggedIn(true);

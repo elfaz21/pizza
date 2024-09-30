@@ -21,7 +21,9 @@ const PopularPizza = () => {
   useEffect(() => {
     const fetchPizzas = async () => {
       try {
-        const response = await fetch("http://localhost:8001/api/menu");
+        const response = await fetch(
+          "https://pizza-server-30q1.onrender.com/api/menu"
+        );
         const data = await response.json();
         setPizzas(data); // Assuming data is an array of pizzas
         console.log("Fetched pizzas:", data); // Log fetched data for verification

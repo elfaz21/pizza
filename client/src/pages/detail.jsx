@@ -25,7 +25,7 @@ const PizzaPage = () => {
     const fetchPizza = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8001/api/menu/${id}`
+          `https://pizza-server-30q1.onrender.com/api/menu/${id}`
         );
         setPizza(response.data);
       } catch (error) {
@@ -38,7 +38,7 @@ const PizzaPage = () => {
     const fetchCustomerPhoneNo = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8001/api/clients/${userId}`
+          `https://pizza-server-30q1.onrender.com/api/clients/${userId}`
         );
         const clientData = response.data;
         setCustomerPhoneNo(clientData.phoneNo); // Set the phone number
@@ -84,7 +84,7 @@ const PizzaPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8001/api/orders",
+        "https://pizza-server-30q1.onrender.com/api/orders",
         orderData
       );
       console.log("Order placed successfully:", response.data);

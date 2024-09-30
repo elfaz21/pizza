@@ -15,6 +15,7 @@ import AddMenu from "./pages/addMenu";
 
 function App() {
   const [userId, setUserId] = useState(null);
+  const [role, setRole] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <MyContext.Provider
@@ -23,6 +24,8 @@ function App() {
         setUserId,
         isLoggedIn,
         setIsLoggedIn,
+        role,
+        setRole,
       }}
     >
       <BrowserRouter>

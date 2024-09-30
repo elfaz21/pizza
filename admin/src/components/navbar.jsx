@@ -7,7 +7,7 @@ import axios from "axios";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const { userId } = useContext(MyContext);
+  const { userId, role } = useContext(MyContext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -42,6 +42,7 @@ function Navbar() {
             Add Menu
           </Link>
         </div>
+        <p style={{ color: "red" }}>{role}</p>
         <button
           id="menu-toggle"
           onClick={toggleMenu}

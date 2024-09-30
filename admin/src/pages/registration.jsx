@@ -45,7 +45,7 @@ const AddAdmin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("Super Admin");
+  const [role, setRole] = useState("SuperAdmin");
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [location, setLocation] = useState("");
   const [restaurantName, setRestaurantName] = useState("");

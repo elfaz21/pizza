@@ -67,13 +67,16 @@ const RegistrationComponent = () => {
         termsAccepted,
       });
 
-      const response = await axios.post("http://localhost:8001/api/clients", {
-        phoneNo,
-        email,
-        password,
-        termsAccepted,
-        location,
-      });
+      const response = await axios.post(
+        "https://pizza-server-30q1.onrender.com/api/clients",
+        {
+          phoneNo,
+          email,
+          password,
+          termsAccepted,
+          location,
+        }
+      );
 
       setMessage(response.data.message);
       console.log(response.data.message);

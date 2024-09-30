@@ -16,7 +16,9 @@ const Fasting = () => {
   useEffect(() => {
     const fetchPizzas = async () => {
       try {
-        const response = await fetch("http://localhost:8001/api/menu");
+        const response = await fetch(
+          "https://pizza-server-30q1.onrender.com/api/menu"
+        );
         const data = await response.json();
         // Filter pizzas to exclude those containing "Mozzarella"
         const fastingPizzas = data.filter(

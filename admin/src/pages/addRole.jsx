@@ -26,9 +26,11 @@ const Role = () => {
   const [roleName, setRoleName] = useState("");
   const [permissions, setPermissions] = useState({
     updateOrderStatus: false,
-    seeCustomers: false,
+    deleteUser: false,
+    editUser: false,
     seeOrders: false,
     createRoles: false,
+    deleteRoles: false,
     addUsers: false,
   });
 

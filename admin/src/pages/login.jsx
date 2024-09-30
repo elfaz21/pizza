@@ -31,7 +31,7 @@ const loginSchema = z.object({
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUserId, setIsLoggedIn } = useContext(MyContext);
+  const { setUserId, setIsLoggedIn, setRole } = useContext(MyContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({}); // State to store validation errors
 
@@ -39,14 +39,27 @@ const LoginComponent = () => {
     // Validate inputs
     try {
       loginSchema.parse({ email, password }); // Validate using Zod
+
       const response = await axios.post("http://localhost:8001/api/login", {
         email,
         password,
       });
-      navigate("/");
+
+      // Set user ID and login status
       setUserId(response.data.id);
       setIsLoggedIn(true);
       console.log("Login successful");
+
+      // Fetch user details including role
+      const userResponse = await axios.get(
+        `http://localhost:8001/api/users/${response.data.id}`
+      ); // Adjust endpoint as needed
+      const userData = userResponse.data;
+
+      // Set the fetched role in context
+      setRole(userData.role); // Assuming userData.role contains the role string
+      console.log(userData.role);
+      navigate("/");
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Handle validation errors
