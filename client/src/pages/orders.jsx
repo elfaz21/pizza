@@ -31,6 +31,11 @@ const Orders = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      if (!userId) {
+        setLoading(false);
+        return; // Skip fetching orders if no userId
+      }
+
       try {
         const response = await axios.get(
           `https://pizza-server-30q1.onrender.com/api/orders/`
@@ -68,8 +73,6 @@ const Orders = () => {
       />
 
       <div style={{ marginTop: "120px" }}>
-        {" "}
-        {/* Adjust this margin based on your navbar height */}
         <h1
           className="text-2xl font-semi-bold text-left"
           style={{
@@ -84,6 +87,14 @@ const Orders = () => {
         {loading ? (
           <div className="flex justify-center items-center">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-gray-900"></div>
+          </div>
+        ) : !userId ? (
+          <div className="text-center mt-10">
+            <h2 className="text-lg font-bold">Login and order</h2>
+          </div>
+        ) : orders.length === 0 ? (
+          <div className="text-center mt-10">
+            <h2 className="text-lg font-bold">You don't have orders yet</h2>
           </div>
         ) : (
           <div
@@ -106,19 +117,19 @@ const Orders = () => {
               >
                 <div
                   style={{
-                    width: "250px", // Slightly larger than the image
-                    height: "250px", // Slightly larger than the image
+                    width: "250px",
+                    height: "250px",
                     borderRadius: "50%",
-                    backgroundColor: "#FF8000B4", // Orange background
+                    backgroundColor: "#FF8000B4",
                     position: "absolute",
-                    top: "8px", // Slightly offset from the top
+                    top: "8px",
                     left: "50%",
-                    transform: "translateX(-50%)", // Center it horizontally
-                    zIndex: 1, // Place it behind the image
+                    transform: "translateX(-50%)",
+                    zIndex: 1,
                   }}
                 />
                 <img
-                  src={pizza.pizzaPhoto || pizzaImage2} // Fallback image if pizzaPhoto is not available
+                  src={pizza.pizzaPhoto || pizzaImage2}
                   alt={pizza.name}
                   className="object-cover rounded-full mb-2"
                   style={{
@@ -127,8 +138,8 @@ const Orders = () => {
                     borderRadius: "50%",
                     backgroundColor: "#FF8100",
                     margin: "0 auto",
-                    marginTop: "10px", // Space from the top
-                    zIndex: 1, // Ensure the image is above the background
+                    marginTop: "10px",
+                    zIndex: 1,
                   }}
                 />
                 <div className="text-left mt-14">
