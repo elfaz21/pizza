@@ -11,10 +11,10 @@ import {
 import { MyContext } from "../context/Context";
 import Sidebar from "../components/sideBar";
 import Navbar from "../components/navbar";
-import LoginPage from "./login"; // Import your LoginPage component
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Import the icon
-import MenuIcon from "@mui/icons-material/Menu"; // Import the hamburger icon
-import axios from "axios"; // Import axios for API calls
+import LoginPage from "./login";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import MenuIcon from "@mui/icons-material/Menu";
+import axios from "axios";
 
 const columns = (handleStatusChange) => [
   { field: "id", headerName: "ID", width: 90 },
@@ -75,35 +75,56 @@ const columns = (handleStatusChange) => [
 
 const OrdersPage = () => {
   const { userId } = useContext(MyContext);
-  const [rows, setRows] = useState([]); // Initialize rows as an empty array
+  const [rows, setRows] = useState([]);
+  const [restaurantId2, setRestaurantId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Fetch orders on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://pizza-server-30q1.onrender.com/api/users/${userId}`
+        );
+        setRestaurantId(response.data.restaurantId); // Assuming user data contains restaurantId
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [userId]);
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("https://pizza-server-30q1.onrender.com/api/orders/");
+        const response = await axios.get(
+          "https://pizza-server-30q1.onrender.com/api/orders/"
+        );
         const filteredOrders = response.data
-          .filter((order) => order.restaurantId === userId)
+          .filter(
+            (order) =>
+              order.restaurantId === userId ||
+              order.restaurantId === restaurantId2
+          )
           .map((order, index) => ({
-            id: index + 1, // Generate a unique ID for DataGrid
+            id: index + 1,
             name: order.name,
-            topping: order.toppings.join(", "), // Join toppings array into a string
+            topping: order.toppings.join(", "),
             quantity: order.quantity,
-            customerNo: order.customerPhoneNo, // Fetch customer phone number
-            createdAt: new Date(order.createdAt).toLocaleString(), // Format date
+            customerNo: order.customerPhoneNo,
+            createdAt: new Date(order.createdAt).toLocaleString(),
             status:
-              order.status.charAt(0).toUpperCase() + order.status.slice(1), // Capitalize status
+              order.status.charAt(0).toUpperCase() + order.status.slice(1),
           }));
 
-        setRows(filteredOrders); // Set the filtered orders to state
+        setRows(filteredOrders);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
     };
 
     fetchOrders();
-  }, [userId]); // Fetch orders when userId changes
+  }, [userId, restaurantId2]);
 
   const handleStatusChange = (e, id) => {
     const { value } = e.target;
@@ -116,14 +137,12 @@ const OrdersPage = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  // Check if the user is logged in
   if (!userId) {
     return <LoginPage />;
   }
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-100">
-      {/* Sidebar is conditionally rendered based on state */}
       <div
         className={`fixed inset-0 md:hidden transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -149,22 +168,22 @@ const OrdersPage = () => {
               checkboxSelection
               autoHeight
               style={{
-                minWidth: "600px", // Set a minimum width for horizontal scrolling
+                minWidth: "600px",
               }}
             />
           </div>
         </Paper>
-        {/* Hamburger icon button for mobile */}
+
         <IconButton
           onClick={toggleSidebar}
           style={{
-            position: "absolute", // Changed to absolute positioning
+            position: "absolute",
             bottom: "20px",
             right: "20px",
             backgroundColor: "#1976d2",
             color: "black",
             borderRadius: "50%",
-            zIndex: 50, // Ensure it's above other elements
+            zIndex: 50,
           }}
         >
           <MenuIcon />

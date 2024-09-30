@@ -109,6 +109,12 @@ const PizzaPage = () => {
       image: pizza2,
     },
     {
+      name: "Pepperoni",
+      description:
+        "A popular favorite, loaded with spicy pepperoni slices and gooey mozzarella.",
+      image: pizza2,
+    },
+    {
       name: "BBQ Chicken",
       description:
         "Savory BBQ chicken, red onions, and cilantro on a base of melted cheese.",
@@ -197,7 +203,7 @@ const PizzaPage = () => {
 
               <button
                 onClick={handleOrder}
-                className="mt-6 flex items-center justify-between bg-orange-500 text-white rounded-lg px-10 py-4 hover:bg-orange-600 transition"
+                className="mt-6 flex items-center text-bold justify-between bg-orange-500 text-white rounded-lg px-10 py-4 hover:bg-orange-600 transition"
                 style={{ width: "420px" }}
               >
                 Order
@@ -235,12 +241,13 @@ const PizzaPage = () => {
           {relatedPizzas.map((pizza, index) => (
             <div
               key={index}
-              className="card bg-white shadow-md rounded-sm flex flex-col justify-center items-center p-4"
+              className="card bg-white shadow-md rounded-md flex flex-col justify-center items-center"
               style={{
-                width: window.innerWidth < 768 ? "300px" : "400px",
-                flex: "1 1 auto",
-                marginLeft: "24px",
-                borderRadius: "15px",
+                width: window.innerWidth < 768 ? "300px" : "400px", // Responsive width
+                flex: "0 0 auto",
+                position: "relative",
+                margin: "0 10px",
+                borderRadius: "25px",
               }}
             >
               <img
@@ -263,7 +270,9 @@ const PizzaPage = () => {
                 >
                   {pizza.name}
                 </h1>
-                <p className="text-sm text-gray-600">{pizza.description}</p>
+                <p className="text-sm text-left m-5 text-gray-600">
+                  {pizza.description}
+                </p>
               </div>
             </div>
           ))}

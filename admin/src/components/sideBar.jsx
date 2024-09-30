@@ -6,8 +6,8 @@ import {
   FaUserShield,
   FaUsers,
   FaSignOutAlt,
-} from "react-icons/fa"; // Updated imports
-import { NavLink } from "react-router-dom"; // Change Link to NavLink
+} from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 import logoImage from "../assets/logoImage.svg";
 
 const Sidebar = () => {
@@ -17,24 +17,13 @@ const Sidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const dashboardStyle = {
-    backgroundColor: "#fff",
-    zIndex: 50,
-    color: "black",
-    height: "100vh",
-    width: isCollapsed ? "60px" : "250px",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    display: "flex",
-    flexDirection: "column",
-    transition: "all 0.5s ease-in-out",
-  };
-
   return (
-    <div className="z-50" style={dashboardStyle}>
-      <div className="p-4 z-50 flex items-center justify-between">
+    <div
+      className={`fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-white transition-all duration-500 ease-in-out ${
+        isCollapsed ? "w-16" : "w-64"
+      }`}
+    >
+      <div className="p-4 flex items-center justify-between">
         <span className={`text-2xl font-bold ${isCollapsed ? "hidden" : ""}`}>
           Pizza
         </span>
@@ -42,22 +31,15 @@ const Sidebar = () => {
           className="text-black focus:outline-none"
           onClick={toggleSidebar}
         >
-          <FaPizzaSlice style={{ color: "#FF8100" }} />{" "}
-          {/* Changed hamburger icon to a pizza slice icon */}
+          <FaPizzaSlice style={{ color: "#FF8100" }} />
         </button>
       </div>
 
       <div className={`p-4 flex justify-center ${isCollapsed ? "hidden" : ""}`}>
-        <img
-          src={logoImage}
-          alt="Logo"
-          style={{ width: "50px", height: "50px" }}
-        />
+        <img src={logoImage} alt="Logo" className="w-12 h-12" />
       </div>
 
-      <div
-        className={`flex flex-col space-y-2 ${isCollapsed ? "collapsed" : ""}`}
-      >
+      <div className={`flex flex-col space-y-2 ${isCollapsed ? "hidden" : ""}`}>
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -66,7 +48,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaClipboardList className="w-6 h-6 mr-2" /> {/* Icon for Orders */}
+          <FaClipboardList className="w-6 h-6 mr-2" />
           {isCollapsed ? null : "Orders"}
         </NavLink>
         <NavLink
@@ -77,7 +59,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaPlus className="w-6 h-6 mr-2" /> {/* Icon for Add Menu */}
+          <FaPlus className="w-6 h-6 mr-2" />
           {isCollapsed ? null : "Add Menu"}
         </NavLink>
         <NavLink
@@ -88,7 +70,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaUserShield className="w-6 h-6 mr-2" /> {/* Icon for Role */}
+          <FaUserShield className="w-6 h-6 mr-2" />
           {isCollapsed ? null : "Role"}
         </NavLink>
         <NavLink
@@ -99,7 +81,7 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaUsers className="w-6 h-6 mr-2" /> {/* Icon for Users */}
+          <FaUsers className="w-6 h-6 mr-2" />
           {isCollapsed ? null : "User"}
         </NavLink>
       </div>
@@ -107,10 +89,10 @@ const Sidebar = () => {
       <NavLink
         to="/login"
         className={`mt-auto p-4 border-t border-gray-300 hover:bg-orange-100 flex items-center ${
-          isCollapsed ? "collapsed" : ""
+          isCollapsed ? "hidden" : ""
         }`}
       >
-        <FaSignOutAlt className="w-6 h-6 mr-2" /> {/* Icon for Logout */}
+        <FaSignOutAlt className="w-6 h-6 mr-2" />
         {isCollapsed ? null : "Logout"}
       </NavLink>
     </div>

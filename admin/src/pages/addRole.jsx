@@ -17,10 +17,10 @@ import { FaEye, FaTrash } from "react-icons/fa";
 import Sidebar from "../components/sideBar";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import { MyContext } from "../context/Context"; // Import your context
+import { MyContext } from "../context/Context";
 
 const Role = () => {
-  const { userId } = useContext(MyContext); // Get userId from context
+  const { userId } = useContext(MyContext);
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState([]);
   const [roleName, setRoleName] = useState("");
