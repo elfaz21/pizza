@@ -53,10 +53,7 @@ const TopRestorant = () => {
         backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFF0E023)",
       }}
     >
-      <h1
-        className="text-2xl font-semibold text-left mt-14 ml-14"
-        style={{ fontSize: "50px", color: "#00000080" }}
-      >
+      <h1 className="text-3xl font-semibold text-left mt-14 mx-4 md:text-5xl text-gray-500">
         Top Restaurants
       </h1>
       <div className="flex p-2 mt-4 items-center overflow-x-hidden scrollbar-hidden scroll-container">

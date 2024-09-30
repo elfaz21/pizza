@@ -47,7 +47,7 @@ const Fasting = () => {
   }
 
   return (
-    <div className="relative mt-24" style={gradientBackground}>
+    <div className="relative mt-24 " style={gradientBackground}>
       <h1
         className="text-2xl font-semi-bold text-left mt-14 ml-24"
         style={{
@@ -61,7 +61,7 @@ const Fasting = () => {
       </h1>
 
       <div
-        className="flex overflow-x-auto mt-14 z-50"
+        className="flex overflow-x-auto mt-14 z-50 "
         style={{
           padding: "20px 0",
           scrollbarWidth: "none", // Hide scrollbar in Firefox
@@ -72,7 +72,7 @@ const Fasting = () => {
         {pizzas.map((pizza, index) => (
           <div
             key={index}
-            className="card bg-white shadow-md rounded-md flex flex-col justify-center items-center"
+            className="card bg-white shadow-md rounded-md flex flex-col justify-center items-center "
             style={{
               width: window.innerWidth < 768 ? "300px" : "400px", // Responsive width
               flex: "0 0 auto",

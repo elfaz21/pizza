@@ -17,154 +17,79 @@ const FeaturedPizzaCarousel = () => {
     autoplaySpeed: 3000,
     customPaging: function (i) {
       return (
-        <button
-          style={{
-            width: "10px",
-            height: "10px",
-            margin: "0 5px",
-            borderRadius: "50%",
-            background: "gray",
-          }}
-        >
-          {i + 1}
-        </button>
+        <button className="w-2 h-2 mx-1 rounded-full bg-gray-400"></button>
       );
     },
   };
 
-  const carouselItemStyle = {
-    display: "flex",
-    alignItems: "center",
-    color: "#fff",
-    padding: "60px",
-    textAlign: "left",
-    borderRadius: "40px",
-    margin: "0 50px",
-    position: "relative",
-    overflow: "hidden",
-  };
-
-  const orderButtonStyle = {
-    padding: "10px 40px",
-    border: "none",
-    borderRadius: "5px",
-    color: "#fff",
-    cursor: "pointer",
-    marginTop: "10px",
-    marginLeft: "70px",
-    background: "#FF9921",
-  };
-
-  const imageStyle = {
-    position: "absolute",
-    top: 0,
-    right: "-1px",
-    height: "500px",
-    borderRadius: "10px 0 0 10px",
-  };
-
-  const titleStyle = {
-    fontSize: "45px",
-    width: "550px",
-    fontWeight: "bold",
-    marginBottom: "20px",
-    marginLeft: "70px",
-  };
-  const descriptionStyle = {
-    fontSize: "14px",
-    width: "480px",
-    marginBottom: "20px",
-    marginLeft: "70px",
-  };
-
   return (
-    <div
-      style={{
-        backgroundImage: "linear-gradient( #FFFFFF, #F3D7BCBE, #FFF8F113)",
-      }}
-    >
-      <h2
-        style={{
-          fontSize: "50px",
-          fontWeight: "bold",
-          marginLeft: "60px",
-          marginBottom: "20px",
-          color: "#00000080",
-        }}
-      >
+    <div className="bg-gradient-to-b from-white via-[#F3D7BCBE] to-[#FFF8F113] p-5">
+      <h2 className="text-5xl font-bold text-gray-500 mb-5 md:text-4xl sm:text-3xl">
         Featured Pizza
       </h2>
       <Slider {...settings}>
-        <div>
-          <div
-            style={{
-              ...carouselItemStyle,
-
-              background: "#2F2F2F",
-            }}
-          >
-            <img src={cardImage1} alt="Pizza" style={{ ...imageStyle }} />
-            <div>
-              <h3 style={titleStyle}>
-                Make Your First Order and Get
-                <span style={{ color: "#FF9921" }}> 50% Off</span>
-              </h3>
-              <p style={descriptionStyle}>
-                In publishing and graphic design, Lorem ipsum is a placeholder
-                text commonly used to demonstrate the visual form of a document
-                or a typeface without.
-              </p>
-              <button style={orderButtonStyle}>Order Now</button>
+        {[cardImage1, cardImage2, cardImage3].map((image, index) => (
+          <div key={index}>
+            <div
+              className={`flex items-center text-white rounded-3xl overflow-hidden mx-10 pl-12 ${
+                index === 0
+                  ? "bg-gray-800"
+                  : index === 1
+                  ? "bg-[#50482B]"
+                  : "bg-[#296D60]"
+              }`}
+            >
+              <div className="flex-1">
+                <div className="lg:flex lg:flex-row lg:justify-between">
+                  <div className="lg:w-1/2">
+                    <h3 className="text-4xl font-bold mb-4">
+                      Make Your First Order and Get
+                      <span className="text-[#FF9921]"> 50% Off</span>
+                    </h3>
+                  </div>
+                </div>{" "}
+                <div className="lg:flex lg:flex-row lg:justify-between">
+                  <div className="lg:w-1/2">
+                    <p className="text-sm mb-4">
+                      In publishing and graphic design, Lorem ipsum is a
+                      placeholder text commonly used to demonstrate the visual
+                      form of a document or a typeface without.
+                    </p>
+                  </div>
+                </div>
+                <button className="px-10 py-2 bg-[#FF9921] text-white rounded-md">
+                  Order Now
+                </button>
+              </div>
+              {/* Hide image on mobile */}
+              <img
+                src={image}
+                alt="Pizza"
+                className="h-96 rounded-lg ml-5 hidden md:block"
+              />
             </div>
           </div>
-        </div>
-        <div>
-          <div
-            style={{
-              ...carouselItemStyle,
-
-              background: "#50482B",
-            }}
-          >
-            <img src={cardImage2} alt="Pizza" style={{ ...imageStyle }} />
-            <div>
-              <h3 style={titleStyle}>
-                Make Your First Order and Get
-                <span style={{ color: "#FF9921" }}> 50% Off</span>
-              </h3>
-              <p style={descriptionStyle}>
-                In publishing and graphic design, Lorem ipsum is a placeholder
-                text commonly used to demonstrate the visual form of a document
-                or a typeface without.
-              </p>
-              <button style={orderButtonStyle}>Order Now</button>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div
-            style={{
-              ...carouselItemStyle,
-
-              background: "#296D60",
-            }}
-          >
-            <img src={cardImage3} alt="Pizza" style={{ ...imageStyle }} />
-            <div>
-              <h3 style={titleStyle}>
-                Make Your First Order and Get
-                <span style={{ color: "#FF9921" }}> 50% Off</span>
-              </h3>
-              <p style={descriptionStyle}>
-                In publishing and graphic design, Lorem ipsum is a placeholder
-                text commonly used to demonstrate the visual form of a document
-                or a typeface without.
-              </p>
-              <button style={orderButtonStyle}>Order Now</button>
-            </div>
-          </div>
-        </div>
+        ))}
       </Slider>
+      {/* Media Queries for Responsive Design */}
+      <style>{`
+    @media (max-width: 768px) {
+   
+      img {
+        height: 0; 
+        width: 0; 
+        margin-left: 0; 
+      }
+   
+    }
+
+    @media (max-width: 480px) {
+   
+      button {
+        padding: 6px 15px; 
+      }
+    }
+  `}</style>
     </div>
   );
 };

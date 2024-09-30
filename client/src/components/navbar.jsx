@@ -1,11 +1,11 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import logo from "../assets/logo.svg";
-import { MyContext } from "../context/Context"; // Make sure to adjust the import according to your setup
+import { MyContext } from "../context/Context"; // Import your context
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoggedIn, logout } = useContext(MyContext); // Extract logout function from context
+  const { setIsLoggedIn, isLoggedIn } = useContext(MyContext); // Extract logout function from context
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -13,7 +13,8 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    navigate("/");
+    setIsLoggedIn(false); // Clear user session
+    navigate("/"); // Redirect to home after logout
   };
 
   return (
@@ -93,20 +94,33 @@ function Navbar() {
           )
         ) : null}
       </div>
+
       {isMenuOpen && (
-        <ul className="lg:hidden text-white absolute t-10 z-50 right-5 rounded-lg w-64 h-30 flex flex-col items-center bg-black py-4">
+        <ul className="lg:hidden text-black z-50 absolute top-12 right-5 rounded-lg w-64 h-auto flex flex-col items-center bg-white bg-opacity-30 backdrop-blur-md border border-gray-300 py-4">
           <li>
-            <Link to="/" className="nav-link" onClick={toggleMenu}>
+            <Link
+              to="/"
+              className="nav-link hover:text-orange-500"
+              onClick={toggleMenu}
+            >
               Home
             </Link>
           </li>
           <li>
-            <Link to="/orders" className="nav-link" onClick={toggleMenu}>
+            <Link
+              to="/orders"
+              className="nav-link hover:text-orange-500"
+              onClick={toggleMenu}
+            >
               Orders
             </Link>
           </li>
           <li>
-            <Link to="/who-we-are" className="nav-link" onClick={toggleMenu}>
+            <Link
+              to="/who-we-are"
+              className="nav-link hover:text-orange-500"
+              onClick={toggleMenu}
+            >
               Who we are
             </Link>
           </li>
