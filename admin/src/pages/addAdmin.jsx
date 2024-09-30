@@ -85,7 +85,7 @@ const OrdersPage = () => {
         const response = await axios.get(
           `https://pizza-server-30q1.onrender.com/api/users/${userId}`
         );
-        setRestaurantId(response.data.restaurantId); // Assuming user data contains restaurantId
+        setRestaurantId(response.data.restaurantId);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

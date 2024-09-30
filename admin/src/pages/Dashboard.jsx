@@ -55,7 +55,6 @@ const Dashboard = () => {
               <div>Active Users</div>
               <div className="font-bold text-2xl">120</div>
             </div>
-            {/* Add more statistics here */}
           </div>
         </Paper>
       </div>
