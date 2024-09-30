@@ -82,7 +82,7 @@ const OrdersPage = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/api/orders/");
+        const response = await axios.get("https://pizza-server-30q1.onrender.com/api/orders/");
         const filteredOrders = response.data
           .filter((order) => order.restaurantId === userId)
           .map((order, index) => ({

@@ -40,7 +40,9 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/api/users");
+        const response = await axios.get(
+          "https://pizza-server-30q1.onrender.com/api/users"
+        );
         const usersWithId = response.data
           .filter((user) => user.restaurantId === userId) // Filter by restaurantId
           .filter((user) => user.role !== "Super Admin") // Exclude super admins
@@ -60,7 +62,9 @@ const Users = () => {
 
     const fetchRoles = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/api/role");
+        const response = await axios.get(
+          "https://pizza-server-30q1.onrender.com/api/role"
+        );
         const filteredRoles = response.data
           .filter((role) => role.restaurantId === userId) // Filter roles by restaurantId
           .map((role) => ({
@@ -83,7 +87,10 @@ const Users = () => {
     const updatedUser = { ...userToToggle, isActive: !userToToggle.isActive };
 
     try {
-      await axios.put(`http://localhost:8001/api/users/${id}`, updatedUser);
+      await axios.put(
+        `https://pizza-server-30q1.onrender.com/api/users/${id}`,
+        updatedUser
+      );
       setData((prevData) =>
         prevData.map((row) => (row.id === id ? updatedUser : row))
       );
@@ -94,7 +101,9 @@ const Users = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8001/api/users/${id}`);
+      await axios.delete(
+        `https://pizza-server-30q1.onrender.com/api/users/${id}`
+      );
       setData((prevData) => prevData.filter((row) => row.id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -112,16 +121,19 @@ const Users = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8001/api/users", {
-        name,
-        email,
-        phoneNo,
-        location,
-        role,
-        password, // Include the password
-        restaurantId: userId, // Use userId from context as restaurantId
-        isActive: true,
-      });
+      const response = await axios.post(
+        "https://pizza-server-30q1.onrender.com/api/users",
+        {
+          name,
+          email,
+          phoneNo,
+          location,
+          role,
+          password, // Include the password
+          restaurantId: userId, // Use userId from context as restaurantId
+          isActive: true,
+        }
+      );
 
       const newUserWithId = {
         id: response.data.user._id,

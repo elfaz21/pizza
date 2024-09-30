@@ -40,10 +40,13 @@ const LoginComponent = () => {
     try {
       loginSchema.parse({ email, password }); // Validate using Zod
 
-      const response = await axios.post("http://localhost:8001/api/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://pizza-server-30q1.onrender.com/api/login",
+        {
+          email,
+          password,
+        }
+      );
 
       // Set user ID and login status
       setUserId(response.data.id);
@@ -52,7 +55,7 @@ const LoginComponent = () => {
 
       // Fetch user details including role
       const userResponse = await axios.get(
-        `http://localhost:8001/api/users/${response.data.id}`
+        `https://pizza-server-30q1.onrender.com/api/users/${response.data.id}`
       ); // Adjust endpoint as needed
       const userData = userResponse.data;
 

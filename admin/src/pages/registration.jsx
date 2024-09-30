@@ -84,18 +84,21 @@ const AddAdmin = () => {
         termsAccepted,
       });
 
-      const response = await axios.post("http://localhost:8001/api/users", {
-        adminName,
-        phoneNo,
-        email,
-        password,
-        confirmPassword,
-        role,
-        termsAccepted,
-        imageUrl,
-        location,
-        restaurantName,
-      });
+      const response = await axios.post(
+        "https://pizza-server-30q1.onrender.com/api/users",
+        {
+          adminName,
+          phoneNo,
+          email,
+          password,
+          confirmPassword,
+          role,
+          termsAccepted,
+          imageUrl,
+          location,
+          restaurantName,
+        }
+      );
 
       setMessage(response.data.message);
       console.log(response.data.message);

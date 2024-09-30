@@ -17,7 +17,7 @@ function Navbar() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8001/api/users/${userId}`
+          `https://pizza-server-30q1.onrender.com/api/users/${userId}`
         );
         setUser(response.data);
       } catch (error) {

@@ -37,7 +37,9 @@ const Role = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await axios.get(`http://localhost:8001/api/role`);
+        const response = await axios.get(
+          `https://pizza-server-30q1.onrender.com/api/role`
+        );
 
         // Filter the roles by restaurantId after fetching
         const rolesWithId = response.data
@@ -88,7 +90,9 @@ const Role = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8001/api/role/${id}`);
+      await axios.delete(
+        `https://pizza-server-30q1.onrender.com/api/role/${id}`
+      );
       setData((prevData) => prevData.filter((row) => row.id !== id));
       console.log("Deleted role with ID:", id);
     } catch (error) {
@@ -98,11 +102,14 @@ const Role = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:8001/api/role", {
-        roleName,
-        permissions,
-        restaurantId: userId, // Include restaurantId in the request
-      });
+      const response = await axios.post(
+        "https://pizza-server-30q1.onrender.com/api/role",
+        {
+          roleName,
+          permissions,
+          restaurantId: userId, // Include restaurantId in the request
+        }
+      );
       const newRole = {
         id: response.data._id,
         RoleName: response.data.roleName,

@@ -40,7 +40,7 @@ const AddMenu = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8001/api/users/${userId}`
+          `https://pizza-server-30q1.onrender.com/api/users/${userId}`
         );
         setRestaurantName(response.data.restaurantName);
         setImageUrl(response.data.imageUrl);
@@ -67,15 +67,18 @@ const AddMenu = () => {
     );
 
     try {
-      const response = await axios.post("http://localhost:8001/api/menu", {
-        name: pizzaName,
-        price: parseFloat(price),
-        toppings: selectedToppingsArray,
-        pizzaPhoto: photo, // Send the Base64 photo
-        userId,
-        restaurantName,
-        imageUrl,
-      });
+      const response = await axios.post(
+        "https://pizza-server-30q1.onrender.com/api/menu",
+        {
+          name: pizzaName,
+          price: parseFloat(price),
+          toppings: selectedToppingsArray,
+          pizzaPhoto: photo, // Send the Base64 photo
+          userId,
+          restaurantName,
+          imageUrl,
+        }
+      );
       console.log("Pizza added:", response.data);
       // Reset form fields
       setPizzaName("");
