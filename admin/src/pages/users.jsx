@@ -14,29 +14,28 @@ import {
   MenuItem,
   Box,
 } from "@mui/material";
-import { FaTrash, FaEdit } from "react-icons/fa"; // Importing trash and edit icons
+import { FaTrash, FaEdit } from "react-icons/fa";
 import Sidebar from "../components/sideBar";
 import Navbar from "../components/navbar";
-import axios from "axios"; // Import axios for API calls
-
+import axios from "axios";
+import CombinedSidebarNavbar from "../components/sideBar";
 const Users = () => {
-  const [data, setData] = useState([]); // Users data
-  const [roles, setRoles] = useState([]); // Dynamic roles from API
-  const [open, setOpen] = useState(false); // State for modal visibility
-  const [editOpen, setEditOpen] = useState(false); // State for edit modal visibility
+  const [data, setData] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
     phoneNo: "",
     location: "",
     role: "",
-    password: "", // Password field
+    password: "",
   });
-  const [message, setMessage] = useState(""); // State for messages
-  const [editingUserId, setEditingUserId] = useState(null); // Track which user is being edited
-  const { userId } = useContext(MyContext); // Extract userId from context
+  const [message, setMessage] = useState("");
+  const [editingUserId, setEditingUserId] = useState(null);
+  const { userId } = useContext(MyContext);
 
-  // Fetch users from the API on component mount
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -44,8 +43,8 @@ const Users = () => {
           "https://pizza-server-30q1.onrender.com/api/users"
         );
         const usersWithId = response.data
-          .filter((user) => user.restaurantId === userId) // Filter by restaurantId
-          .filter((user) => user.role !== "Super Admin") // Exclude super admins
+          .filter((user) => user.restaurantId === userId)
+          .filter((user) => user.role !== "Super Admin")
           .map((user) => ({
             id: user._id,
             name: user.name,
@@ -66,7 +65,7 @@ const Users = () => {
           "https://pizza-server-30q1.onrender.com/api/role"
         );
         const filteredRoles = response.data
-          .filter((role) => role.restaurantId === userId) // Filter roles by restaurantId
+          .filter((role) => role.restaurantId === userId)
           .map((role) => ({
             value: role.roleName,
             label: role.roleName,
@@ -79,8 +78,8 @@ const Users = () => {
     };
 
     fetchUsers();
-    fetchRoles(); // Fetch roles on mount
-  }, [userId]); // Add userId as a dependency
+    fetchRoles();
+  }, [userId]);
 
   const handleToggleActive = async (id) => {
     const userToToggle = data.find((user) => user.id === id);
@@ -129,8 +128,8 @@ const Users = () => {
           phoneNo,
           location,
           role,
-          password, // Include the password
-          restaurantId: userId, // Use userId from context as restaurantId
+          password,
+          restaurantId: userId,
           isActive: true,
         }
       );
@@ -142,7 +141,7 @@ const Users = () => {
       };
 
       setData((prevData) => [...prevData, newUserWithId]);
-      setOpen(false); // Close modal
+      setOpen(false);
       setNewUser({
         name: "",
         email: "",
@@ -150,8 +149,8 @@ const Users = () => {
         location: "",
         role: "",
         password: "",
-      }); // Reset form
-      setMessage(""); // Clear message
+      });
+      setMessage("");
     } catch (error) {
       console.error("Error creating user:", error);
       setMessage(
@@ -162,9 +161,9 @@ const Users = () => {
   };
 
   const handleEditUser = (user) => {
-    setNewUser(user); // Set user data for editing
-    setEditingUserId(user.id); // Set the ID for the user being edited
-    setEditOpen(true); // Open edit modal
+    setNewUser(user);
+    setEditingUserId(user.id);
+    setEditOpen(true);
   };
 
   const handleUpdateUser = async (e) => {
@@ -197,7 +196,7 @@ const Users = () => {
       setData((prevData) =>
         prevData.map((row) => (row.id === editingUserId ? updatedUser : row))
       );
-      setEditOpen(false); // Close edit modal
+      setEditOpen(false);
       setNewUser({
         name: "",
         email: "",
@@ -205,8 +204,8 @@ const Users = () => {
         location: "",
         role: "",
         password: "",
-      }); // Reset form
-      setMessage(""); // Clear message
+      });
+      setMessage("");
     } catch (error) {
       console.error("Error updating user:", error);
       setMessage(
@@ -232,7 +231,7 @@ const Users = () => {
               <Switch
                 checked={params.row.isActive}
                 onChange={(event) => {
-                  event.stopPropagation(); // Prevent row selection
+                  event.stopPropagation();
                   handleToggleActive(params.row.id);
                 }}
                 color={params.row.isActive ? "success" : "error"}
@@ -242,7 +241,7 @@ const Users = () => {
           />
           <FaEdit
             style={{ cursor: "pointer", marginLeft: "10px", color: "blue" }}
-            onClick={() => handleEditUser(params.row)} // Open edit modal
+            onClick={() => handleEditUser(params.row)}
           />
 
           <FaTrash
@@ -256,8 +255,7 @@ const Users = () => {
 
   return (
     <div style={{ height: "100vh", width: "100%", backgroundColor: "#f0f0f0" }}>
-      <Sidebar />
-      <Navbar />
+      <CombinedSidebarNavbar />
       <Paper
         elevation={3}
         className="p-4"
@@ -348,7 +346,7 @@ const Users = () => {
           <TextField
             margin="dense"
             label="Password"
-            type="password" // Make it a password field
+            type="password"
             fullWidth
             variant="outlined"
             value={newUser.password}

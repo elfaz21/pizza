@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { MyContext } from "../context/Context";
 import {
   FaPizzaSlice,
   FaClipboardList,
@@ -12,9 +13,14 @@ import logoImage from "../assets/logoImage.svg";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { setTitle } = useContext(MyContext);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const handleLinkClick = (title) => {
+    setTitle(title);
   };
 
   return (
@@ -42,6 +48,7 @@ const Sidebar = () => {
       <div className={`flex flex-col space-y-2 ${isCollapsed ? "hidden" : ""}`}>
         <NavLink
           to="/"
+          onClick={() => handleLinkClick("Orders")}
           className={({ isActive }) =>
             `p-4 hover:bg-orange-100 flex items-center ${
               isActive ? "text-orange-500 bg-orange-200" : ""
@@ -49,10 +56,11 @@ const Sidebar = () => {
           }
         >
           <FaClipboardList className="w-6 h-6 mr-2" />
-          {isCollapsed ? null : "Orders"}
+          <span className={isCollapsed ? "hidden" : ""}>Orders</span>
         </NavLink>
         <NavLink
           to="/add-menu"
+          onClick={() => handleLinkClick("Add Menu")}
           className={({ isActive }) =>
             `p-4 hover:bg-orange-100 flex items-center ${
               isActive ? "text-orange-500 bg-orange-200" : ""
@@ -60,10 +68,11 @@ const Sidebar = () => {
           }
         >
           <FaPlus className="w-6 h-6 mr-2" />
-          {isCollapsed ? null : "Add Menu"}
+          <span className={isCollapsed ? "hidden" : ""}>Add Menu</span>
         </NavLink>
         <NavLink
           to="/add-role"
+          onClick={() => handleLinkClick("Role")}
           className={({ isActive }) =>
             `p-4 hover:bg-orange-100 flex items-center ${
               isActive ? "text-orange-500 bg-orange-200" : ""
@@ -71,10 +80,11 @@ const Sidebar = () => {
           }
         >
           <FaUserShield className="w-6 h-6 mr-2" />
-          {isCollapsed ? null : "Role"}
+          <span className={isCollapsed ? "hidden" : ""}>Role</span>
         </NavLink>
         <NavLink
           to="/users"
+          onClick={() => handleLinkClick("User")}
           className={({ isActive }) =>
             `p-4 hover:bg-orange-100 flex items-center ${
               isActive ? "text-orange-500 bg-orange-200" : ""
@@ -82,19 +92,61 @@ const Sidebar = () => {
           }
         >
           <FaUsers className="w-6 h-6 mr-2" />
-          {isCollapsed ? null : "User"}
+          <span className={isCollapsed ? "hidden" : ""}>User</span>
         </NavLink>
       </div>
 
       <NavLink
         to="/login"
+        onClick={() => handleLinkClick("Logout")}
         className={`mt-auto p-4 border-t border-gray-300 hover:bg-orange-100 flex items-center ${
           isCollapsed ? "hidden" : ""
         }`}
       >
         <FaSignOutAlt className="w-6 h-6 mr-2" />
-        {isCollapsed ? null : "Logout"}
+        <span className={isCollapsed ? "hidden" : ""}>Logout</span>
       </NavLink>
+
+      {/* Always Display Icons Even When Collapsed */}
+      <div
+        className={`flex flex-col space-y-2 ${isCollapsed ? "w-16" : "hidden"}`}
+      >
+        <NavLink
+          to="/"
+          onClick={() => handleLinkClick("Orders")}
+          className="flex items-center p-4"
+        >
+          <FaClipboardList className="w-6 h-6" />
+        </NavLink>
+        <NavLink
+          to="/add-menu"
+          onClick={() => handleLinkClick("Add Menu")}
+          className="flex items-center p-4"
+        >
+          <FaPlus className="w-6 h-6" />
+        </NavLink>
+        <NavLink
+          to="/add-role"
+          onClick={() => handleLinkClick("Role")}
+          className="flex items-center p-4"
+        >
+          <FaUserShield className="w-6 h-6" />
+        </NavLink>
+        <NavLink
+          to="/users"
+          onClick={() => handleLinkClick("User")}
+          className="flex items-center p-4"
+        >
+          <FaUsers className="w-6 h-6" />
+        </NavLink>
+        <NavLink
+          to="/login"
+          onClick={() => handleLinkClick("Logout")}
+          className="flex items-center p-4"
+        >
+          <FaSignOutAlt className="w-6 h-6" />
+        </NavLink>
+      </div>
     </div>
   );
 };

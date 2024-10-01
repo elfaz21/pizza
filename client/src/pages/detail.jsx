@@ -203,7 +203,7 @@ const PizzaPage = () => {
 
               <button
                 onClick={handleOrder}
-                className="mt-6 flex items-center text-bold justify-between bg-orange-500 text-white rounded-lg px-10 py-4 hover:bg-orange-600 transition"
+                className="mt-6 flex items-center justify-between bg-orange-500 text-white rounded-lg px-10 py-4 hover:bg-orange-600 transition"
                 style={{ width: "420px" }}
               >
                 Order

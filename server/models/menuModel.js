@@ -11,6 +11,7 @@ const menuSchema = new mongoose.Schema({
   },
   imageUrl: { type: String, default: null },
   userId: { type: String, default: null },
+  restaurantId: { type: String, default: null },
 });
 
 const Menu = mongoose.model("menu", menuSchema);

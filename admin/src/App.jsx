@@ -17,6 +17,7 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [role, setRole] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [title, setTitle] = useState("");
   return (
     <MyContext.Provider
       value={{
@@ -26,6 +27,8 @@ function App() {
         setIsLoggedIn,
         role,
         setRole,
+        title,
+        setTitle,
       }}
     >
       <BrowserRouter>

@@ -7,6 +7,8 @@ import {
   MenuItem,
   FormControl,
   IconButton,
+  Modal,
+  Box,
 } from "@mui/material";
 import { MyContext } from "../context/Context";
 import Sidebar from "../components/sideBar";
@@ -16,10 +18,24 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import axios from "axios";
 
-const columns = (handleStatusChange) => [
-  { field: "id", headerName: "ID", width: 90 },
+const columns = (handleStatusChange, openToppingsModal) => [
   { field: "name", headerName: "Name", width: 150 },
-  { field: "topping", headerName: "Topping", width: 150 },
+  {
+    field: "topping",
+    headerName: "Topping",
+    width: 150,
+    renderCell: (params) => {
+      const toppings = params.row.toppings;
+      return (
+        <div
+          onClick={() => openToppingsModal(toppings)}
+          style={{ cursor: "pointer", color: "orange" }}
+        >
+          {toppings.length > 0 ? toppings[0] : "No Toppings"}
+        </div>
+      );
+    },
+  },
   { field: "quantity", headerName: "Quantity", width: 150 },
   { field: "customerNo", headerName: "Customer No", width: 150 },
   { field: "createdAt", headerName: "Created At", width: 180 },
@@ -78,6 +94,8 @@ const OrdersPage = () => {
   const [rows, setRows] = useState([]);
   const [restaurantId2, setRestaurantId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedToppings, setSelectedToppings] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -85,7 +103,7 @@ const OrdersPage = () => {
         const response = await axios.get(
           `https://pizza-server-30q1.onrender.com/api/users/${userId}`
         );
-        setRestaurantId(response.data.restaurantId); // Assuming user data contains restaurantId
+        setRestaurantId(response.data.restaurantId);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -106,10 +124,10 @@ const OrdersPage = () => {
               order.restaurantId === userId ||
               order.restaurantId === restaurantId2
           )
-          .map((order, index) => ({
-            id: index + 1,
+          .map((order) => ({
+            id: order._id,
             name: order.name,
-            topping: order.toppings.join(", "),
+            toppings: order.toppings, // Store all toppings
             quantity: order.quantity,
             customerNo: order.customerPhoneNo,
             createdAt: new Date(order.createdAt).toLocaleString(),
@@ -126,15 +144,36 @@ const OrdersPage = () => {
     fetchOrders();
   }, [userId, restaurantId2]);
 
-  const handleStatusChange = (e, id) => {
+  const handleStatusChange = async (e, id) => {
     const { value } = e.target;
+
     setRows((prevRows) =>
       prevRows.map((row) => (row.id === id ? { ...row, status: value } : row))
     );
+
+    try {
+      await axios.put(
+        `https://pizza-server-30q1.onrender.com/api/orders/${id}`,
+        {
+          status: value,
+        }
+      );
+    } catch (error) {
+      console.error("Error updating order status:", error);
+    }
   };
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
+  };
+
+  const openToppingsModal = (toppings) => {
+    setSelectedToppings(toppings);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   if (!userId) {
@@ -155,17 +194,13 @@ const OrdersPage = () => {
       </div>
       <div className="flex-1 overflow-auto p-4 md:ml-60">
         <Navbar />
-        <Paper elevation={3} className="p-4 mt-4">
-          <Typography variant="h4" gutterBottom>
-            Orders
-          </Typography>
+        <Paper elevation={3} className="p-4 mt-4 mx-8">
           <div style={{ height: "400px", width: "100%", overflowX: "auto" }}>
             <DataGrid
               rows={rows}
-              columns={columns(handleStatusChange)}
+              columns={columns(handleStatusChange, openToppingsModal)}
               pageSize={5}
               rowsPerPageOptions={[5, 10, 20]}
-              checkboxSelection
               autoHeight
               style={{
                 minWidth: "600px",
@@ -188,6 +223,45 @@ const OrdersPage = () => {
         >
           <MenuIcon />
         </IconButton>
+
+        {/* Toppings Modal */}
+        <Modal open={modalOpen} onClose={closeModal}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 2,
+            }}
+          >
+            <Typography variant="h6" component="h2">
+              Toppings
+            </Typography>
+            <div
+              style={{ display: "flex", flexWrap: "wrap", marginTop: "10px" }}
+            >
+              {selectedToppings.map((topping, index) => (
+                <div
+                  key={index}
+                  style={{
+                    background: "#FEA01DFF",
+                    color: "white",
+                    borderRadius: "20px",
+                    padding: "5px 10px",
+                    margin: "5px",
+                  }}
+                >
+                  {topping}
+                </div>
+              ))}
+            </div>
+          </Box>
+        </Modal>
       </div>
     </div>
   );

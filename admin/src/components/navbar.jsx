@@ -7,7 +7,7 @@ import axios from "axios";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const { userId, role } = useContext(MyContext);
+  const { userId, role, title } = useContext(MyContext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,7 +22,6 @@ function Navbar() {
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user data: ", error);
-        // Handle error
       }
     };
 
@@ -39,7 +38,7 @@ function Navbar() {
             to="/add-menu"
             className="ml-64 font-bold text-lg hover:text-orange-500 active:text-orange-500 flex items-center h-full"
           >
-            Add Menu
+            {title}
           </Link>
         </div>
         <p style={{ color: "red" }}>{role}</p>
@@ -68,9 +67,7 @@ function Navbar() {
             isMenuOpen ? "block" : "hidden"
           } lg:flex`}
           style={{ fontSize: "18px" }}
-        >
-          {/* Other menu items can be added here if needed */}
-        </ul>
+        ></ul>
         <div className="flex items-center">
           <FaBell className="text-xl mr-4 text-black" />
           {user && user.imageUrl ? (

@@ -20,16 +20,18 @@ exports.addPizza = async (req, res) => {
     userId,
     restaurantName,
     imageUrl,
-  } = req.body; // Ensure naming is consistent
+    restaurantId,
+  } = req.body;
 
   const newPizza = new Menu({
     name,
     price,
     toppings,
-    pizzaPhoto, // Ensure this matches the schema
+    pizzaPhoto,
     userId,
     restaurantName,
     imageUrl,
+    restaurantId,
   });
 
   try {

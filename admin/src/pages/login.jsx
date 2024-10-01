@@ -9,10 +9,10 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { createTheme } from "@mui/material/styles";
-import { MyContext } from "../context/Context"; // Import MyContext if it's defined in a separate file
+import { MyContext } from "../context/Context";
 import logo from "../assets/logo.svg";
 import logoImage from "../assets/logoImage.svg";
-import { z } from "zod"; // Import Zod for validation
+import { z } from "zod";
 
 const theme = createTheme({
   palette: {
@@ -33,12 +33,11 @@ const LoginComponent = () => {
   const [password, setPassword] = useState("");
   const { setUserId, setIsLoggedIn, setRole } = useContext(MyContext);
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({}); // State to store validation errors
+  const [errors, setErrors] = useState({});
 
   const handleLogin = async () => {
-    // Validate inputs
     try {
-      loginSchema.parse({ email, password }); // Validate using Zod
+      loginSchema.parse({ email, password });
 
       const response = await axios.post(
         "https://pizza-server-30q1.onrender.com/api/login",
@@ -48,24 +47,20 @@ const LoginComponent = () => {
         }
       );
 
-      // Set user ID and login status
       setUserId(response.data.id);
       setIsLoggedIn(true);
       console.log("Login successful");
 
-      // Fetch user details including role
       const userResponse = await axios.get(
         `https://pizza-server-30q1.onrender.com/api/users/${response.data.id}`
-      ); // Adjust endpoint as needed
+      );
       const userData = userResponse.data;
 
-      // Set the fetched role in context
-      setRole(userData.role); // Assuming userData.role contains the role string
+      setRole(userData.role);
       console.log(userData.role);
       navigate("/");
     } catch (error) {
       if (error instanceof z.ZodError) {
-        // Handle validation errors
         const fieldErrors = {};
         error.errors.forEach((err) => {
           fieldErrors[err.path[0]] = err.message; // Set error messages by field
@@ -110,10 +105,10 @@ const LoginComponent = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setErrors((prev) => ({ ...prev, email: undefined })); // Clear error on change
+                setErrors((prev) => ({ ...prev, email: undefined }));
               }}
-              error={!!errors.email} // Show error state
-              helperText={errors.email} // Display error message
+              error={!!errors.email}
+              helperText={errors.email}
             />
             <TextField
               label="Password"
@@ -124,10 +119,10 @@ const LoginComponent = () => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setErrors((prev) => ({ ...prev, password: undefined })); // Clear error on change
+                setErrors((prev) => ({ ...prev, password: undefined }));
               }}
-              error={!!errors.password} // Show error state
-              helperText={errors.password} // Display error message
+              error={!!errors.password}
+              helperText={errors.password}
             />
             <FormControlLabel
               control={<Checkbox color="orange" />}

@@ -41,7 +41,6 @@ const Role = () => {
           `https://pizza-server-30q1.onrender.com/api/role`
         );
 
-        // Filter the roles by restaurantId after fetching
         const rolesWithId = response.data
           .filter((role) => role.restaurantId === userId)
           .map((role) => ({
@@ -107,7 +106,7 @@ const Role = () => {
         {
           roleName,
           permissions,
-          restaurantId: userId, // Include restaurantId in the request
+          restaurantId: userId,
         }
       );
       const newRole = {

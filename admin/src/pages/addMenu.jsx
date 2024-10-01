@@ -25,7 +25,7 @@ const initialToppings = [
 ];
 
 const AddMenu = () => {
-  const { userId } = useContext(MyContext); // Fetch userId from context
+  const { userId, role } = useContext(MyContext);
   const [pizzaName, setPizzaName] = useState("");
   const [price, setPrice] = useState("");
   const [selectedToppings, setSelectedToppings] = useState({});
@@ -35,24 +35,31 @@ const AddMenu = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
   const [showAddTopping, setShowAddTopping] = useState(false);
+  const [restaurantId, setRestaurantId] = useState("");
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchRestaurantData = async () => {
       try {
         const response = await axios.get(
-          `https://pizza-server-30q1.onrender.com/api/users/${userId}`
+          role === "SuperAdmin"
+            ? `https://pizza-server-30q1.onrender.com/api/users/${userId}`
+            : `https://pizza-server-30q1.onrender.com/api/users/${restaurantId}`
         );
-        setRestaurantName(response.data.restaurantName);
-        setImageUrl(response.data.imageUrl);
+        if (role === "SuperAdmin") {
+          setRestaurantName(response.data.restaurantName);
+          setImageUrl(response.data.imageUrl);
+        } else {
+          setRestaurantId(response.data.restaurantId);
+        }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching Restaurant data:", error);
       }
     };
 
     if (userId) {
-      fetchUserData();
+      fetchRestaurantData();
     }
-  }, [userId]);
+  }, [userId, role, restaurantId]);
 
   const handleToggleTopping = (topping) => {
     setSelectedToppings((prev) => ({
@@ -77,6 +84,7 @@ const AddMenu = () => {
           userId,
           restaurantName,
           imageUrl,
+          restaurantId,
         }
       );
       console.log("Pizza added:", response.data);
