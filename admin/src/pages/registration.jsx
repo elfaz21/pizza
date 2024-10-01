@@ -228,7 +228,23 @@ const AddAdmin = () => {
                 style={{ display: "none" }}
                 onChange={handleFileUpload}
               />
+              {imageUrl && (
+                <div style={{ marginTop: "10px", textAlign: "center" }}>
+                  <img
+                    src={imageUrl}
+                    alt="Chosen Logo"
+                    style={{
+                      maxWidth: "200px",
+                      maxHeight: "50px",
+                      borderRadius: "8px",
+
+                      marginLeft: "10px",
+                    }}
+                  />
+                </div>
+              )}
             </div>
+
             <FormControlLabel
               control={
                 <Checkbox
