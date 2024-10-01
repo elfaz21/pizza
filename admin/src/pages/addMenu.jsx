@@ -22,6 +22,7 @@ const initialToppings = [
   "Sausage",
   "Bacon",
   "Extra cheese",
+  "Mozzarella",
 ];
 
 const AddMenu = () => {
@@ -40,26 +41,36 @@ const AddMenu = () => {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       try {
-        const response = await axios.get(
-          role === "SuperAdmin"
-            ? `https://pizza-server-30q1.onrender.com/api/users/${userId}`
-            : `https://pizza-server-30q1.onrender.com/api/users/${restaurantId}`
-        );
         if (role === "SuperAdmin") {
+          const response = await axios.get(
+            `https://pizza-server-30q1.onrender.com/api/users/${userId}`
+          );
           setRestaurantName(response.data.restaurantName);
           setImageUrl(response.data.imageUrl);
         } else {
-          setRestaurantId(response.data.restaurantId);
+          // First, fetch the restaurantId
+          const response = await axios.get(
+            `https://pizza-server-30q1.onrender.com/api/users/${userId}`
+          );
+          const fetchedRestaurantId = response.data.restaurantId;
+          setRestaurantId(fetchedRestaurantId);
+
+          // Then, fetch restaurant data using the restaurantId
+          const restaurantResponse = await axios.get(
+            `https://pizza-server-30q1.onrender.com/api/users/${fetchedRestaurantId}`
+          );
+          setRestaurantName(restaurantResponse.data.restaurantName);
+          setImageUrl(restaurantResponse.data.imageUrl);
         }
       } catch (error) {
-        console.error("Error fetching Restaurant data:", error);
+        console.error("Error fetching restaurant data:", error);
       }
     };
 
     if (userId) {
       fetchRestaurantData();
     }
-  }, [userId, role, restaurantId]);
+  }, [userId, role]);
 
   const handleToggleTopping = (topping) => {
     setSelectedToppings((prev) => ({
