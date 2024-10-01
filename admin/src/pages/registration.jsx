@@ -126,8 +126,7 @@ const AddAdmin = () => {
           />
         </div>
         <div className="w-full md:w-1/2 bg-white rounded-r-lg shadow-lg p-8">
-          <img src={logo} alt="" className="hidden md:block mb-2 mt-2" />
-          <form className="rounded px-12 pb-2" onSubmit={handleRegister}>
+          <form className="rounded px-8 pb-2" onSubmit={handleRegister}>
             <TextField
               label="Admin Name"
               variant="outlined"
