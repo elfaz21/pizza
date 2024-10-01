@@ -80,11 +80,10 @@ const AddMenu = () => {
           name: pizzaName,
           price: parseFloat(price),
           toppings: selectedToppingsArray,
-          pizzaPhoto: photo,
+          pizzaPhoto: photo, // Send the Base64 photo
           userId,
           restaurantName,
           imageUrl,
-          restaurantId,
         }
       );
       console.log("Pizza added:", response.data);
