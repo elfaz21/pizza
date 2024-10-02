@@ -209,21 +209,6 @@ const OrdersPage = () => {
           </div>
         </Paper>
 
-        <IconButton
-          onClick={toggleSidebar}
-          style={{
-            position: "absolute",
-            bottom: "20px",
-            right: "20px",
-            backgroundColor: "#1976d2",
-            color: "black",
-            borderRadius: "50%",
-            zIndex: 50,
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
-
         {/* Toppings Modal */}
         <Modal open={modalOpen} onClose={closeModal}>
           <Box

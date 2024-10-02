@@ -7,19 +7,19 @@ import pizza2 from "../assets/piz2.svg";
 import pizza3 from "../assets/piz3.svg";
 import Navbar from "../components/navbar";
 import orderIcon from "../assets/orderIcon.svg";
+import Modal from "../components/successOrFailModal";
 
 const PizzaPage = () => {
   const { id } = useParams();
   const [pizza, setPizza] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [toppings, setToppings] = useState({
-    onions: false,
-    tomatoes: false,
-    others: false,
-  });
-  const { userId } = useContext(MyContext); // Extract userId from context
+  const [toppings, setToppings] = useState({});
+  const { userId } = useContext(MyContext);
   const [customerPhoneNo, setCustomerPhoneNo] = useState("");
+  const [relatedPizzas, setRelatedPizzas] = useState([]);
+  const [orderSuccessMessage, setOrderSuccessMessage] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchPizza = async () => {
@@ -28,6 +28,11 @@ const PizzaPage = () => {
           `https://pizza-server-30q1.onrender.com/api/menu/${id}`
         );
         setPizza(response.data);
+        const initialToppings = {};
+        response.data.toppings.forEach((topping) => {
+          initialToppings[topping] = false;
+        });
+        setToppings(initialToppings);
       } catch (error) {
         console.error("Error fetching menu details:", error);
       } finally {
@@ -41,7 +46,7 @@ const PizzaPage = () => {
           `https://pizza-server-30q1.onrender.com/api/clients/${userId}`
         );
         const clientData = response.data;
-        setCustomerPhoneNo(clientData.phoneNo); // Set the phone number
+        setCustomerPhoneNo(clientData.phoneNo);
       } catch (error) {
         console.error("Error fetching client details:", error);
       }
@@ -50,6 +55,25 @@ const PizzaPage = () => {
     fetchPizza();
     fetchCustomerPhoneNo();
   }, [id, userId]);
+
+  useEffect(() => {
+    const fetchRelatedPizzas = async () => {
+      try {
+        const response = await fetch(
+          "https://pizza-server-30q1.onrender.com/api/menu"
+        );
+        const data = await response.json();
+        const relatedPizzas = data.filter(
+          (pizza) => !pizza.toppings.includes("Mozzarella")
+        );
+        setRelatedPizzas(relatedPizzas);
+      } catch (error) {
+        console.error("Error fetching pizzas:", error);
+      }
+    };
+
+    fetchRelatedPizzas();
+  }, []);
 
   const handleToppingChange = (event) => {
     setToppings({
@@ -73,13 +97,13 @@ const PizzaPage = () => {
       name: pizza.name,
       price: pizza.price * quantity,
       toppings: selectedToppings,
-      pizzaPhoto: pizza.pizzaPhoto || pizza1, // Fallback to default image if not available
-      userId: userId, // Using userId from context
-      restaurantId: pizza.userId, // Assuming restaurantId is the userId of the pizza's owner
-      status: "preparing", // Ensure status is set to "preparing"
-      customerPhoneNo: customerPhoneNo, // Include phone number in the order
-      createdAt: new Date().toISOString(), // Add createdAt timestamp
-      quantity: quantity, // Add quantity ordered
+      pizzaPhoto: pizza.pizzaPhoto || pizza1,
+      userId: userId,
+      restaurantId: pizza.userId,
+      status: "preparing",
+      customerPhoneNo: customerPhoneNo,
+      createdAt: new Date().toISOString(),
+      quantity: quantity,
     };
 
     try {
@@ -87,77 +111,48 @@ const PizzaPage = () => {
         "https://pizza-server-30q1.onrender.com/api/orders",
         orderData
       );
-      console.log("Order placed successfully:", response.data);
-      // Handle successful order placement (e.g., show a confirmation message)
+      setOrderSuccessMessage("Your order has been placed successfully.");
+      setModalVisible(true);
     } catch (error) {
       console.error("Error placing order:", error);
-      // Handle error (e.g., show an error message)
     }
   };
 
-  const relatedPizzas = [
-    {
-      name: "Margherita",
-      description:
-        "A classic pizza topped with fresh tomatoes, mozzarella cheese, and fragrant basil.",
-      image: pizza1,
-    },
-    {
-      name: "Pepperoni",
-      description:
-        "A popular favorite, loaded with spicy pepperoni slices and gooey mozzarella.",
-      image: pizza2,
-    },
-    {
-      name: "Pepperoni",
-      description:
-        "A popular favorite, loaded with spicy pepperoni slices and gooey mozzarella.",
-      image: pizza2,
-    },
-    {
-      name: "BBQ Chicken",
-      description:
-        "Savory BBQ chicken, red onions, and cilantro on a base of melted cheese.",
-      image: pizza3,
-    },
-  ];
+  const closeModal = () => {
+    setModalVisible(false);
+    setOrderSuccessMessage("");
+  };
 
   return (
-    <div
-      className="flex flex-col"
-      style={{
-        backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFF0E023)",
-      }}
-    >
+    <div className="flex flex-col bg-gradient-to-b from-orange-100 to-white">
       <Navbar />
-      <div className="flex gap-6 px-20">
+      <div className="flex flex-col md:flex-row gap-6 px-4 md:px-20">
         {/* Left Side: Pizza Images */}
-        <div className="flex gap-10">
+        <div className="flex flex-col md:flex-row gap-10">
           <img
             src={pizza?.image || pizza1}
             alt="Pizza"
-            className="w-full rounded-lg"
+            className="w-full rounded-lg md:w-1/2"
           />
-          <div className="flex flex-col mt-20 gap-16">
-            <img src={pizza2} alt="Pizza 2" className="w-full rounded-lg" />
+          <div className="flex flex-col mt-10 gap-6 md:mt-10 hidden md:block">
+            <img
+              src={pizza2}
+              alt="Pizza 2"
+              className="w-full rounded-lg mb-8"
+            />
             <img src={pizza3} alt="Pizza 3" className="w-full rounded-lg" />
           </div>
         </div>
 
-        {/* Right Side: Pizza Details */}
         {loading ? (
           <div className="flex justify-center items-center flex-1 mt-10">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-gray-900"></div>
           </div>
         ) : (
-          <div className="flex-1 mt-24 pl-24">
-            <h2
-              className="font-bold text-gray-800"
-              style={{ fontSize: "80px" }}
-            >
+          <div className="flex-1 mt-10 md:mt-24 pl-4 md:pl-24">
+            <h2 className="font-bold text-gray-800 text-4xl leading-tight">
               {pizza.name}
             </h2>
-
             <div className="flex flex-col mt-4">
               {pizza.toppings && pizza.toppings.length > 0 && (
                 <div className="flex flex-wrap mt-2">
@@ -178,7 +173,6 @@ const PizzaPage = () => {
                   ))}
                 </div>
               )}
-
               <div className="flex items-center mt-6">
                 <button
                   onClick={() => handleQuantityChange("-")}
@@ -196,15 +190,14 @@ const PizzaPage = () => {
                 <h1 className="m-2 font-bold text-3xl text-green-600">
                   {pizza.price * quantity}
                 </h1>
-                <span className="text-1xl font-semibold text-black-600">
+                <span className="text-xl font-semibold text-black-600">
                   Birr
                 </span>
               </div>
 
               <button
                 onClick={handleOrder}
-                className="mt-6 flex items-center justify-between bg-orange-500 text-white rounded-lg px-10 py-4 hover:bg-orange-600 transition"
-                style={{ width: "420px" }}
+                className="mt-6 flex items-center justify-between bg-orange-500 text-white rounded-lg px-10 py-4 hover:bg-orange-600 transition w-full max-w-md"
               >
                 Order
                 <img src={orderIcon} alt="" />
@@ -214,70 +207,93 @@ const PizzaPage = () => {
         )}
       </div>
 
-      {/* Related Cards Section */}
-      <div className="relative">
+      <div
+        className="relative px-4 md:px-10"
+        style={{
+          backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFE4C75E)",
+        }}
+      >
         <h1
-          className="text-2xl font-semi-bold text-left"
+          className="text-2xl font-semi-bold text-left mt-14"
           style={{
-            fontSize: "50px",
-            fontWeight: "bold",
+            fontSize: "2.5rem",
             color: "#00000080",
-            margin: "0 94px",
-            marginTop: "20px",
+            margin: "50px 50px",
+            fontWeight: "bold",
           }}
         >
           Related
         </h1>
-
         <div
-          className="flex items-center justify-center overflow-x-auto mt-5 z-50"
+          className="flex overflow-x-auto mt-14 z-50 "
           style={{
-            padding: "10px 0",
+            padding: "20px 0",
             scrollbarWidth: "none",
             "-ms-overflow-style": "none",
-            paddingLeft: window.innerWidth >= 1024 ? "64px" : "0",
+            paddingLeft: window.innerWidth >= 1024 ? "20px" : "0",
           }}
         >
           {relatedPizzas.map((pizza, index) => (
             <div
               key={index}
-              className="card bg-white shadow-md rounded-md flex flex-col justify-center items-center"
+              className="card bg-white shadow-md rounded-md flex flex-col justify-center items-center "
               style={{
-                width: window.innerWidth < 768 ? "300px" : "400px", // Responsive width
+                width: window.innerWidth < 768 ? "300px" : "400px",
                 flex: "0 0 auto",
                 position: "relative",
                 margin: "0 10px",
                 borderRadius: "25px",
               }}
             >
+              <div
+                style={{
+                  width: "250px",
+                  height: "250px",
+                  borderRadius: "50%",
+                  backgroundColor: "#FF8000B4",
+                  position: "absolute",
+                  top: "16px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  zIndex: 1,
+                }}
+              />
               <img
-                src={pizza.image}
+                src={pizza.pizzaPhoto || pizzaImage2}
                 alt={pizza.name}
                 className="object-cover rounded-full mb-2"
                 style={{
-                  width: "80%",
-                  height: "auto",
-                  maxWidth: "300px",
+                  width: "200px",
+                  height: "200px",
                   borderRadius: "50%",
-                  marginTop: "10px",
                   backgroundColor: "#FF8100",
+                  margin: "0 auto",
+                  marginTop: "30px", 
+                  marginBottom: "30px", 
+                  zIndex: 1, 
                 }}
               />
-              <div className="text-center mt-5 px-4">
+              <div className=" mt-8 px-8">
                 <h1
-                  className="text-base font-bold mb-1"
-                  style={{ fontSize: "25px" }}
+                  className="text-base font-bold mb-1 text-center"
+                  style={{
+                    fontSize: "25px",
+                  }}
                 >
                   {pizza.name}
                 </h1>
-                <p className="text-sm text-left m-5 text-gray-600">
-                  {pizza.description}
+                <p className="text-sm text-gray-600 mb-5 text-left">
+                  {pizza.toppings.join(", ")}
                 </p>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {modalVisible && (
+        <Modal message={orderSuccessMessage} onClose={closeModal} />
+      )}
     </div>
   );
 };

@@ -14,13 +14,13 @@ const UserRegistration = () => {
   const navigate = useNavigate();
 
   const handleFileUpload = (e) => {
-    const file = e.target.files[0]; // Get the first selected file
+    const file = e.target.files[0]; 
 
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        const imageUrl = reader.result; // Convert image to base64 string
-        setImageUrl(imageUrl); // Set the image URL in the state
+        const imageUrl = reader.result; 
+        setImageUrl(imageUrl); 
       };
       reader.readAsDataURL(file);
     }

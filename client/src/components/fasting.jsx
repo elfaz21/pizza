@@ -5,7 +5,7 @@ import restaurantProfile from "../assets/restourantProfile.svg";
 
 const Fasting = () => {
   const [pizzas, setPizzas] = useState([]); // State to hold fetched pizzas
-  const [loading, setLoading] = useState(true); // State to manage loading status
+  const [loading, setLoading] = useState(true);
 
   const gradientBackground = {
     backgroundImage: "linear-gradient(#FFFFFF, #FBE4CDFF, #fff8f1)",
@@ -20,7 +20,7 @@ const Fasting = () => {
           "https://pizza-server-30q1.onrender.com/api/menu"
         );
         const data = await response.json();
-        // Filter pizzas to exclude those containing "Mozzarella"
+
         const fastingPizzas = data.filter(
           (pizza) => !pizza.toppings.includes("Mozzarella")
         );
@@ -64,9 +64,9 @@ const Fasting = () => {
         className="flex overflow-x-auto mt-14 z-50 "
         style={{
           padding: "20px 0",
-          scrollbarWidth: "none", // Hide scrollbar in Firefox
-          "-ms-overflow-style": "none", // Hide scrollbar in IE and Edge
-          paddingLeft: window.innerWidth >= 1024 ? "20px" : "0", // Add left padding on large screens
+          scrollbarWidth: "none",
+          "-ms-overflow-style": "none",
+          paddingLeft: window.innerWidth >= 1024 ? "20px" : "0",
         }}
       >
         {pizzas.map((pizza, index) => (
@@ -74,7 +74,7 @@ const Fasting = () => {
             key={index}
             className="card bg-white shadow-md rounded-md flex flex-col justify-center items-center "
             style={{
-              width: window.innerWidth < 768 ? "300px" : "400px", // Responsive width
+              width: window.innerWidth < 768 ? "300px" : "400px",
               flex: "0 0 auto",
               position: "relative",
               margin: "0 10px",
@@ -83,19 +83,19 @@ const Fasting = () => {
           >
             <div
               style={{
-                width: "250px", // Slightly larger than the image
-                height: "250px", // Slightly larger than the image
+                width: "250px",
+                height: "250px",
                 borderRadius: "50%",
-                backgroundColor: "#FF8000B4", // Orange background
+                backgroundColor: "#FF8000B4",
                 position: "absolute",
-                top: "16px", // Slightly offset from the top
+                top: "16px",
                 left: "50%",
-                transform: "translateX(-50%)", // Center it horizontally
-                zIndex: 1, // Place it behind the image
+                transform: "translateX(-50%)",
+                zIndex: 1,
               }}
             />
             <img
-              src={pizza.pizzaPhoto || pizzaImage2} // Fallback image if pizzaPhoto is not available
+              src={pizza.pizzaPhoto || pizzaImage2}
               alt={pizza.name}
               className="object-cover rounded-full mb-2"
               style={{
@@ -104,9 +104,9 @@ const Fasting = () => {
                 borderRadius: "50%",
                 backgroundColor: "#FF8100",
                 margin: "0 auto",
-                marginTop: "30px", // Space from the top
-                marginBottom: "30px", // Space from the top
-                zIndex: 1, // Ensure the image is above the background
+                marginTop: "30px",
+                marginBottom: "30px",
+                zIndex: 1,
               }}
             />
             <div className="text-left mt-8 px-8">
@@ -122,7 +122,7 @@ const Fasting = () => {
                 {pizza.toppings.join(", ")}
               </p>
             </div>
-            {/* Fixed height for price and button section */}
+
             <div className="flex items-center justify-between px-2">
               <div className="flex items-center mx-10">
                 <h1

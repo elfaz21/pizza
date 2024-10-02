@@ -6,8 +6,6 @@ import { MyContext } from "./context/Context";
 import RegistrationComponent from "./pages/registration";
 import LoginComponent from "./pages/login";
 import AddAdmin from "./pages/addAdmin";
-import Dashboard from "./pages/Dashboard";
-import Sidebar from "./components/sideBar";
 import OrdersPage from "./pages/orders";
 import Role from "./pages/addRole";
 import Users from "./pages/users";

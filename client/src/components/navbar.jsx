@@ -1,11 +1,11 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import logo from "../assets/logo.svg";
-import { MyContext } from "../context/Context"; // Import your context
+import { MyContext } from "../context/Context";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { setIsLoggedIn, isLoggedIn } = useContext(MyContext); // Extract logout function from context
+  const { setIsLoggedIn, isLoggedIn } = useContext(MyContext);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -13,8 +13,8 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // Clear user session
-    navigate("/"); // Redirect to home after logout
+    setIsLoggedIn(false);
+    navigate("/");
   };
 
   return (

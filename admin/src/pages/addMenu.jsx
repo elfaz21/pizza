@@ -48,14 +48,12 @@ const AddMenu = () => {
           setRestaurantName(response.data.restaurantName);
           setImageUrl(response.data.imageUrl);
         } else {
-          // First, fetch the restaurantId
           const response = await axios.get(
             `https://pizza-server-30q1.onrender.com/api/users/${userId}`
           );
           const fetchedRestaurantId = response.data.restaurantId;
           setRestaurantId(fetchedRestaurantId);
 
-          // Then, fetch restaurant data using the restaurantId
           const restaurantResponse = await axios.get(
             `https://pizza-server-30q1.onrender.com/api/users/${fetchedRestaurantId}`
           );
@@ -91,14 +89,13 @@ const AddMenu = () => {
           name: pizzaName,
           price: parseFloat(price),
           toppings: selectedToppingsArray,
-          pizzaPhoto: photo, // Send the Base64 photo
+          pizzaPhoto: photo,
           userId,
           restaurantName,
           imageUrl,
         }
       );
       console.log("Pizza added:", response.data);
-      // Reset form fields
       setPizzaName("");
       setPrice("");
       setSelectedToppings({});
@@ -115,9 +112,9 @@ const AddMenu = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPhoto(reader.result); // Set the Base64 string
+        setPhoto(reader.result);
       };
-      reader.readAsDataURL(file); // Read the file as a data URL (Base64)
+      reader.readAsDataURL(file);
     }
   };
 
@@ -133,27 +130,21 @@ const AddMenu = () => {
   return (
     <div style={{ backgroundColor: "#f0f0f0", minHeight: "100vh" }}>
       <Sidebar />
-      <Navbar />
-      <Paper
-        elevation={3}
-        sx={{
-          padding: "20px",
-          maxWidth: "1350px",
-          margin: "0 auto",
-          marginTop: "30px",
-          marginLeft: "290px",
-          backgroundColor: "#ffffff",
-          height: "650px",
-        }}
-      >
-        <div
-          style={{
-            width: "50%",
+      <div className="flex-1 overflow-auto p-4 md:ml-60">
+        <Navbar />
+        <Paper
+          elevation={3}
+          sx={{
+            padding: "30px",
+            maxWidth: "650px",
+            margin: "30px auto",
+
+            backgroundColor: "#ffffff",
             height: "auto",
-            margin: "0 auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            borderRadius: "25px",
           }}
         >
           <Typography variant="h4" gutterBottom>
@@ -178,7 +169,7 @@ const AddMenu = () => {
           <Typography variant="h6" gutterBottom sx={{ marginTop: 2 }}>
             Topping
           </Typography>
-          <Box>
+          <Box sx={{ width: "100%" }}>
             {toppings.map((topping) => (
               <FormControlLabel
                 key={topping}
@@ -197,7 +188,14 @@ const AddMenu = () => {
                 label={topping}
               />
             ))}
-            <Box sx={{ marginTop: 1, display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                marginTop: 1,
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: "center",
+              }}
+            >
               {showAddTopping && (
                 <>
                   <TextField
@@ -208,7 +206,7 @@ const AddMenu = () => {
                     onChange={(e) => setNewTopping(e.target.value)}
                     sx={{
                       marginRight: 1,
-                      width: "150px",
+                      width: { xs: "100%", sm: "150px" },
                       fontSize: "10px",
                       border: "1px solid #FF8100",
                       borderRadius: "4px",
@@ -238,6 +236,7 @@ const AddMenu = () => {
                   color: "#FF8100",
                   borderColor: "#FF8100",
                   marginLeft: showAddTopping ? 1 : 0,
+                  marginTop: { xs: 1, sm: 0 },
                 }}
                 onClick={() => setShowAddTopping((prev) => !prev)}
               >
@@ -273,6 +272,7 @@ const AddMenu = () => {
               cursor: "pointer",
               marginBottom: 2,
               marginTop: "20px",
+              flexDirection: { xs: "column", sm: "row" },
             }}
             onClick={() => document.getElementById("file-upload").click()}
           >
@@ -285,19 +285,21 @@ const AddMenu = () => {
             />
             <FaUpload style={{ marginRight: 8, color: "#FF8100" }} />
             <Typography variant="body1">Upload Pizza Photo</Typography>
+            {photo && (
+              <img
+                src={photo}
+                alt="Pizza"
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "50px",
+                  borderRadius: "8px",
+                  objectFit: "cover",
+                  marginLeft: "5px",
+                }}
+              />
+            )}
           </Box>
-          {photo && (
-            <img
-              src={photo}
-              alt="Pizza"
-              style={{
-                maxWidth: "100%",
-                maxHeight: "50px",
-                borderRadius: "8px",
-                objectFit: "cover",
-              }}
-            />
-          )}
+
           <Button
             variant="contained"
             sx={{
@@ -316,8 +318,18 @@ const AddMenu = () => {
           >
             Submit
           </Button>
-        </div>
-      </Paper>
+
+          <style>
+            {`
+            @media (max-width: 600px) {
+              .MuiPaper-root {
+                margin: 0 10px; // Reduce margin on smaller screens
+              }
+            }
+          `}
+          </style>
+        </Paper>
+      </div>
     </div>
   );
 };

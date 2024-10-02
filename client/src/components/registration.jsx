@@ -10,8 +10,8 @@ import {
 import logo from "../assets/logo.svg";
 import logoImage from "../assets/logoImage.svg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; // Import axios for making API requests
-import { z } from "zod"; // Import Zod for validation
+import axios from "axios";
+import { z } from "zod";
 
 const theme = createTheme({
   palette: {

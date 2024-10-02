@@ -2,9 +2,9 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import cardImage1 from "../assets/cardImage1.svg"; // Import your pizza image
-import cardImage2 from "../assets/cardImage2.svg"; // Import your pizza image
-import cardImage3 from "../assets/cardImage3.svg"; // Import your pizza image
+import cardImage1 from "../assets/cardImage1.svg";
+import cardImage2 from "../assets/cardImage2.svg";
+import cardImage3 from "../assets/cardImage3.svg";
 
 const FeaturedPizzaCarousel = () => {
   const settings = {
@@ -61,7 +61,7 @@ const FeaturedPizzaCarousel = () => {
                   Order Now
                 </button>
               </div>
-              {/* Hide image on mobile */}
+
               <img
                 src={image}
                 alt="Pizza"
@@ -71,7 +71,7 @@ const FeaturedPizzaCarousel = () => {
           </div>
         ))}
       </Slider>
-      {/* Media Queries for Responsive Design */}
+
       <style>{`
     @media (max-width: 768px) {
    

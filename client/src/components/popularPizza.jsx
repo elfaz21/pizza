@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import pizzaImage2 from "../assets/piz1.svg"; // Placeholder image in case of errors
+import pizzaImage2 from "../assets/piz1.svg";
 import restaurantProfile from "../assets/restourantProfile.svg";
 
 const PopularPizza = () => {
-  const [pizzas, setPizzas] = useState([]); // State to hold fetched pizzas
-  const [loading, setLoading] = useState(true); // State to manage loading status
+  const [pizzas, setPizzas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const gradientBackground = {
     backgroundImage: "linear-gradient(#FFDFBD0E, #FFE3C7FF, #FFF0E023)",
@@ -25,12 +25,12 @@ const PopularPizza = () => {
           "https://pizza-server-30q1.onrender.com/api/menu"
         );
         const data = await response.json();
-        setPizzas(data); // Assuming data is an array of pizzas
-        console.log("Fetched pizzas:", data); // Log fetched data for verification
+        setPizzas(data);
+        console.log("Fetched pizzas:", data);
       } catch (error) {
         console.error("Error fetching pizzas:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
 
@@ -71,25 +71,25 @@ const PopularPizza = () => {
                 maxWidth: "380px",
                 margin: "20px auto",
                 borderRadius: "25px",
-                height: "500px", // Set a fixed height for the card
+                height: "500px",
                 position: "relative",
               }}
             >
               <div
                 style={{
-                  width: "250px", // Slightly larger than the image
-                  height: "250px", // Slightly larger than the image
+                  width: "250px",
+                  height: "250px",
                   borderRadius: "50%",
-                  backgroundColor: "#FF8000B4", // Orange background
+                  backgroundColor: "#FF8000B4",
                   position: "absolute",
-                  top: "8px", // Slightly offset from the top
+                  top: "8px",
                   left: "50%",
-                  transform: "translateX(-50%)", // Center it horizontally
-                  zIndex: 1, // Place it behind the image
+                  transform: "translateX(-50%)",
+                  zIndex: 1,
                 }}
               />
               <img
-                src={pizza.pizzaPhoto || pizzaImage2} // Fallback image if pizzaPhoto is not available
+                src={pizza.pizzaPhoto || pizzaImage2}
                 alt={pizza.name}
                 className="object-cover rounded-full mb-2"
                 style={{
@@ -98,8 +98,8 @@ const PopularPizza = () => {
                   borderRadius: "50%",
                   backgroundColor: "#FF8100",
                   margin: "0 auto",
-                  marginTop: "30px", // Space from the top
-                  zIndex: 1, // Ensure the image is above the background
+                  marginTop: "30px",
+                  zIndex: 1,
                 }}
               />
               <div className="text-left mt-8 px-8">

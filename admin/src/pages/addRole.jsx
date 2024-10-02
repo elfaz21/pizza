@@ -161,149 +161,162 @@ const Role = () => {
   ];
 
   return (
-    <div style={{ height: "100vh", width: "100%", backgroundColor: "#f0f0f0" }}>
-      <Sidebar />
-      <Navbar />
-      <Paper
-        elevation={3}
-        className="p-4"
-        style={{
-          margin: "50px auto",
-          marginLeft: "420px",
-          width: "70%",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#FF8100",
-              "&:hover": {
-                backgroundColor: "#e07b00",
-              },
-            }}
-            onClick={handleOpenModal}
-          >
-            Add Role
-          </Button>
-        </Typography>
-        <DataGrid
-          rows={data}
-          columns={columns}
-          pageSize={5}
-          headerClassName="grey-row"
-          disableSelectionOnClick
-        />
-      </Paper>
-      <Dialog
-        open={openModal}
-        onClose={handleCloseModal}
-        maxWidth="sm"
-        PaperProps={{
-          style: { borderRadius: "25px", padding: "20px 40px" },
-        }}
-      >
-        <DialogTitle align="center">Role</DialogTitle>
-        <DialogContent style={{ textAlign: "center" }}>
-          <TextField
-            label="Role Name"
-            fullWidth
-            variant="outlined"
-            value={roleName}
-            onChange={(e) => setRoleName(e.target.value)}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": { borderColor: "grey" },
-                "&:hover fieldset": { borderColor: "grey" },
-                "&.Mui-focused fieldset": { borderColor: "grey" },
-              },
-              "& .MuiInputLabel-root": { color: "grey" },
-              "& .MuiInputLabel-root.Mui-focused": { color: "grey" },
-            }}
-          />
-          <Typography
-            variant="h6"
-            gutterBottom
-            style={{ textAlign: "left", margin: "10px" }}
-          >
-            Permissions
-          </Typography>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "10px",
-            }}
-          >
-            {Object.keys(permissions).map((perm) => (
-              <div
-                key={perm}
-                style={{ display: "flex", alignItems: "center", width: "48%" }}
-              >
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={permissions[perm]}
-                      onChange={(e) =>
-                        setPermissions({
-                          ...permissions,
-                          [perm]: e.target.checked,
-                        })
-                      }
-                      sx={{
-                        color: "#FF8100",
-                        "&.Mui-checked": { color: "#FF8100" },
-                      }}
-                    />
-                  }
-                  label={perm.replace(/([A-Z])/g, " $1").trim()}
-                />
-              </div>
-            ))}
-          </div>
-        </DialogContent>
-        <DialogActions
+    <div
+      className="flex flex-col lg:flex-row"
+      style={{ height: "100vh", backgroundColor: "#f0f0f0" }}
+    >
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
+      <div className="flex-1 overflow-auto p-4 md:ml-60">
+        <Navbar />
+        <Paper
+          elevation={3}
+          className="p-4 mx-auto lg:ml-94"
           style={{
-            justifyContent: "center",
-            backgroundColor: "white",
-            padding: "16px",
+            marginTop: "20px",
+            width: "90%",
+            maxWidth: "1000px",
           }}
         >
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            sx={{
-              width: "180px",
-              height: "42px",
-              margin: "20px auto",
-              backgroundColor: "#FF8100",
-              "&:hover": { backgroundColor: "#e07b00" },
+          <Typography variant="h4" gutterBottom>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#FF8100",
+                "&:hover": {
+                  backgroundColor: "#e07b00",
+                },
+              }}
+              onClick={handleOpenModal}
+            >
+              Add Role
+            </Button>
+          </Typography>
+          <div style={{ maxHeight: 1000, width: "100%" }}>
+            <DataGrid
+              rows={data}
+              columns={columns}
+              pageSize={5}
+              headerClassName="grey-row"
+              disableSelectionOnClick
+            />
+          </div>
+        </Paper>
+        <Dialog
+          open={openModal}
+          onClose={handleCloseModal}
+          maxWidth="sm"
+          PaperProps={{
+            style: { borderRadius: "25px", padding: "20px 40px" },
+          }}
+        >
+          <DialogTitle align="center">Role</DialogTitle>
+          <DialogContent style={{ textAlign: "center" }}>
+            <TextField
+              label="Role Name"
+              fullWidth
+              variant="outlined"
+              value={roleName}
+              onChange={(e) => setRoleName(e.target.value)}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: "grey" },
+                  "&:hover fieldset": { borderColor: "grey" },
+                  "&.Mui-focused fieldset": { borderColor: "grey" },
+                },
+                "& .MuiInputLabel-root": { color: "grey" },
+                "& .MuiInputLabel-root.Mui-focused": { color: "grey" },
+              }}
+            />
+            <Typography
+              variant="h6"
+              gutterBottom
+              style={{ textAlign: "left", margin: "10px" }}
+            >
+              Permissions
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+              }}
+            >
+              {Object.keys(permissions).map((perm) => (
+                <div
+                  key={perm}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "48%",
+                  }}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={permissions[perm]}
+                        onChange={(e) =>
+                          setPermissions({
+                            ...permissions,
+                            [perm]: e.target.checked,
+                          })
+                        }
+                        sx={{
+                          color: "#FF8100",
+                          "&.Mui-checked": { color: "#FF8100" },
+                        }}
+                      />
+                    }
+                    label={perm.replace(/([A-Z])/g, " $1").trim()}
+                  />
+                </div>
+              ))}
+            </div>
+          </DialogContent>
+          <DialogActions
+            style={{
+              justifyContent: "center",
+              backgroundColor: "white",
+              padding: "16px",
             }}
           >
-            Create
-          </Button>
-          <Button
-            onClick={handleCloseModal}
-            variant="contained"
-            sx={{
-              width: "180px",
-              height: "42px",
-              margin: "20px auto",
-              backgroundColor: "#FF8100",
-              "&:hover": { backgroundColor: "#e07b00" },
-            }}
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <style>
-        {`
-          .grey-row .MuiDataGrid-colCell {
-            background-color: #f2f2f2; /* Grey color */
-          }
-        `}
-      </style>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              sx={{
+                width: "180px",
+                height: "42px",
+                margin: "20px auto",
+                backgroundColor: "#FF8100",
+                "&:hover": { backgroundColor: "#e07b00" },
+              }}
+            >
+              Create
+            </Button>
+            <Button
+              onClick={handleCloseModal}
+              variant="contained"
+              sx={{
+                width: "180px",
+                height: "42px",
+                margin: "20px auto",
+                backgroundColor: "#FF8100",
+                "&:hover": { backgroundColor: "#e07b00" },
+              }}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <style>
+          {`
+            .grey-row .MuiDataGrid-colCell {
+              background-color: #f2f2f2; /* Grey color */
+            }
+          `}
+        </style>
+      </div>
     </div>
   );
 };

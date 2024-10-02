@@ -9,10 +9,10 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { createTheme } from "@mui/material/styles";
-import { MyContext } from "../context/Context"; // Import MyContext if it's defined in a separate file
+import { MyContext } from "../context/Context";
 import logo from "../assets/logo.svg";
 import logoImage from "../assets/logoImage.svg";
-import { z } from "zod"; // Import Zod for validation
+import { z } from "zod";
 
 const theme = createTheme({
   palette: {
@@ -22,7 +22,6 @@ const theme = createTheme({
   },
 });
 
-// Define Zod validation schema
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters long"),
@@ -33,10 +32,9 @@ const LoginComponent = () => {
   const [password, setPassword] = useState("");
   const { setUserId, setIsLoggedIn } = useContext(MyContext);
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({}); // State to store validation errors
+  const [errors, setErrors] = useState({});
 
   const handleLogin = async () => {
-    // Validate inputs
     try {
       loginSchema.parse({ email, password }); // Validate using Zod
       const response = await axios.post(
@@ -55,7 +53,7 @@ const LoginComponent = () => {
         // Handle validation errors
         const fieldErrors = {};
         error.errors.forEach((err) => {
-          fieldErrors[err.path[0]] = err.message; // Set error messages by field
+          fieldErrors[err.path[0]] = err.message;
         });
         setErrors(fieldErrors);
       } else {
@@ -99,8 +97,8 @@ const LoginComponent = () => {
                 setEmail(e.target.value);
                 setErrors((prev) => ({ ...prev, email: undefined })); // Clear error on change
               }}
-              error={!!errors.email} // Show error state
-              helperText={errors.email} // Display error message
+              error={!!errors.email}
+              helperText={errors.email}
             />
             <TextField
               label="Password"
@@ -111,10 +109,10 @@ const LoginComponent = () => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setErrors((prev) => ({ ...prev, password: undefined })); // Clear error on change
+                setErrors((prev) => ({ ...prev, password: undefined }));
               }}
-              error={!!errors.password} // Show error state
-              helperText={errors.password} // Display error message
+              error={!!errors.password}
+              helperText={errors.password}
             />
             <FormControlLabel
               control={<Checkbox color="orange" />}

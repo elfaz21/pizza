@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import pizzaImage2 from "../assets/piz1.svg";
 import Navbar from "../components/navbar";
-import { MyContext } from "../context/Context"; // Import your context
+import { MyContext } from "../context/Context"; 
 import axios from "axios";
 
 const Orders = () => {
@@ -17,15 +17,23 @@ const Orders = () => {
   };
 
   const getStatusColor = (status) => {
-    if (status === "Received") {
-      return "#01C550"; // Green color for Received
-    } else if (status === "Ordered") {
-      return "#FF8100"; // Orange color for Ordered
+    switch (status) {
+      case "Received":
+        return "#01C550"; 
+      case "Ordered":
+        return "#FF8100"; 
+      case "Preparing":
+        return "#FFDF00"; 
+      case "Ready":
+        return "#FFAA00";
+      case "Delivered":
+        return "#01C550"; 
+      default:
+        return "#FF1100FF"; 
     }
-    return "#FF1100FF"; // Default color
   };
 
-  const { userId } = useContext(MyContext); // Extract userId from context
+  const { userId } = useContext(MyContext); 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,7 +41,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       if (!userId) {
         setLoading(false);
-        return; // Skip fetching orders if no userId
+        return; 
       }
 
       try {
@@ -89,8 +97,8 @@ const Orders = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-gray-900"></div>
           </div>
         ) : !userId ? (
-          <div className="text-center mt-10">
-            <h2 className="text-lg font-bold">Login and order</h2>
+          <div className="text-center mt-10 ">
+            <h2 className="text-lg font-bold ">Login to Order Our Pizzas</h2>
           </div>
         ) : orders.length === 0 ? (
           <div className="text-center mt-10">

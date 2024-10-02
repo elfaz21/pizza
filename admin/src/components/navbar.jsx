@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { FaBell, FaUser } from "react-icons/fa";
+import { Link, Outlet, NavLink } from "react-router-dom";
+import {
+  FaBell,
+  FaUser,
+  FaClipboardList,
+  FaPlus,
+  FaUserShield,
+  FaUsers,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { MyContext } from "../context/Context";
 import axios from "axios";
 
@@ -30,22 +38,24 @@ function Navbar() {
     }
   }, [userId]);
 
+  const handleLinkClick = (link) => {
+    console.log(`${link} clicked`);
+    setIsMenuOpen(false);
+  };
+
   return (
-    <nav className="w-full bg-white z-50 h-20 flex items-center">
-      <div className="px-10 flex justify-between items-center w-full">
+    <nav className="w-full bg-white h-20 flex items-center relative z-50">
+      <div className="px-4 lg:px-10 flex justify-between items-center w-full">
         <div className="flex items-center h-full">
-          <Link
-            to="/add-menu"
-            className="ml-64 font-bold text-lg hover:text-orange-500 active:text-orange-500 flex items-center h-full"
-          >
+          <h1 className="ml-0 lg:ml-4 font-bold text-lg hover:text-orange-500 active:text-orange-500 flex items-center h-full">
             {title}
-          </Link>
+          </h1>
         </div>
-        <p style={{ color: "red" }}>{role}</p>
+
         <button
           id="menu-toggle"
           onClick={toggleMenu}
-          className="lg:hidden text-black focus:outline-none"
+          className="lg:hidden text-black focus:outline-none ml-auto"
         >
           <svg
             className="h-6 w-6"
@@ -62,13 +72,9 @@ function Navbar() {
             />
           </svg>
         </button>
-        <ul
-          className={`font-bold text-base sm:text-lg font-arial flex gap-24 items-center lg:gap-20 transition-all duration-300 ease-in-out ${
-            isMenuOpen ? "block" : "hidden"
-          } lg:flex`}
-          style={{ fontSize: "18px" }}
-        ></ul>
-        <div className="flex items-center">
+
+        <div className="hidden lg:flex items-center">
+          <p className="text-green-500 truncate mr-10">{role}</p>
           <FaBell className="text-xl mr-4 text-black" />
           {user && user.imageUrl ? (
             <img
@@ -83,6 +89,71 @@ function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-20 left-0 w-full bg-white rounded-lg shadow-lg lg:hidden transition-transform transform translate-y-0 duration-300">
+          <div className="flex flex-col items-start py-4 px-6">
+            <NavLink
+              to="/"
+              onClick={() => handleLinkClick("Orders")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center rounded-md transition-colors duration-200 ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaClipboardList className="w-6 h-6 mr-2" />
+              <span>Orders</span>
+            </NavLink>
+            <NavLink
+              to="/add-menu"
+              onClick={() => handleLinkClick("Add Menu")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center rounded-md transition-colors duration-200 ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaPlus className="w-6 h-6 mr-2" />
+              <span>Add Menu</span>
+            </NavLink>
+            <NavLink
+              to="/add-role"
+              onClick={() => handleLinkClick("Role")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center rounded-md transition-colors duration-200 ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaUserShield className="w-6 h-6 mr-2" />
+              <span>Role</span>
+            </NavLink>
+            <NavLink
+              to="/users"
+              onClick={() => handleLinkClick("User")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center rounded-md transition-colors duration-200 ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaUsers className="w-6 h-6 mr-2" />
+              <span>User</span>
+            </NavLink>
+            <NavLink
+              to="/login"
+              onClick={() => handleLinkClick("Logout")}
+              className={`mt-auto p-4 border-t border-gray-300 hover:bg-orange-100 flex items-center rounded-md transition-colors duration-200`}
+            >
+              <FaSignOutAlt className="w-6 h-6 mr-2" />
+              <span>Logout</span>
+            </NavLink>
+          </div>
+        </div>
+      )}
+
       <Outlet />
     </nav>
   );

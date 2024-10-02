@@ -6,151 +6,77 @@ import { FaSearch } from "react-icons/fa";
 
 const HeroSection = () => {
   return (
-    <div
-      style={{
-        backgroundImage: "linear-gradient( #FFFFFF, #ffc993, #fff8f1)",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        padding: "10px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
+    <div className="bg-gradient-to-b from-white to-[#ffc993] min-h-screen flex flex-col justify-center items-center relative overflow-hidden p-4">
       <img
         src={leaf1}
         alt="Leaf 1"
-        style={{
-          position: "absolute",
-          right: "15%",
-          top: "11%",
-        }}
+        className="absolute right-64 top-11 hidden lg:block"
       />
       <img
         src={leaf2}
         alt="Leaf 2"
-        style={{
-          position: "absolute",
-          right: "10%",
-          top: "60%",
-        }}
+        className="absolute right-[224px] top-[394px] hidden lg:block"
       />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "left",
-          flexDirection: "column",
-          maxWidth: "100%",
-          marginLeft: "150px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "150px",
-            marginBottom: "10px",
-            fontWeight: "700",
-            background: "linear-gradient(to right, #FF8100, #FFBE71)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
+
+      <div className="flex flex-col items-center lg:hidden mt-10 relative">
+        <img
+          src={piza}
+          alt="Placeholder"
+          className="w-[300px] h-[100px] absolute -z-10"
+        />
+        <h1 className="text-[60px] font-bold mb-2 bg-gradient-to-r from-[#FF8100] to-[#FFBE71] bg-clip-text text-transparent">
           Order{" "}
-          <span
-            style={{
-              fontSize: "150px",
-              marginBottom: "10px",
-              fontWeight: "700",
-              background: "linear-gradient(to left, #FFC082FF, #FFA230FF)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <span className="bg-gradient-to-l from-[#FFC082FF] to-[#FFA230FF] bg-clip-text text-transparent">
             Us
           </span>
         </h1>
-        <p
-          style={{
-            color: "#000",
-            textAlign: "left",
-            fontWeight: "400",
-            fontSize: "25px",
-            width: "48%",
-            marginBottom: "20px",
-          }}
-        >
+        <p className="text-black text-center font-normal text-[18px] w-11/12 mb-5">
           In publishing and graphic design, Lorem ipsum is a placeholder text
           commonly used to demonstrate the visual form of a document or a
           typeface without.
         </p>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            maxWidth: "40%", // Set the width of the search box container
-            position: "relative",
-            marginTop: "10px",
-          }}
-        >
+        <div className="flex items-center max-w-md w-full relative mt-2">
           <input
             type="text"
             placeholder="Search"
-            style={{
-              padding: "20px",
-              borderRadius: "80px",
-              border: "none",
-              width: "100%", // Make the search box fill the container width
-              marginRight: "10px",
-              fontSize: "1.2em",
-              outline: "none",
-            }}
+            className="p-3 rounded-full border-none w-full text-lg outline-none"
           />
-          <button
-            style={{
-              background: "#FF890F",
-              color: "#fff",
-              padding: "30px",
-              borderRadius: "50%",
-              border: "none",
-              cursor: "pointer",
-              position: "relative",
-              marginLeft: "-75px",
-            }}
-          >
-            <FaSearch
-              style={{
-                fontSize: "1.5em",
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            />
+          <button className="bg-[#FF890F] text-white p-3 rounded-full absolute right-0">
+            <FaSearch className="text-xl" />
           </button>
         </div>
       </div>
+
+      <div className="flex flex-col items-start max-w-full lg:ml-36 lg:block hidden">
+        <h1 className="text-[150px] font-bold mb-2 bg-gradient-to-r from-[#FF8100] to-[#FFBE71] bg-clip-text text-transparent">
+          Order{" "}
+          <span className="bg-gradient-to-l from-[#FFC082FF] to-[#FFA230FF] bg-clip-text text-transparent">
+            Us
+          </span>
+        </h1>
+        <p className="text-black text-left font-normal text-[25px] lg:w-1/2 mb-5">
+          In publishing and graphic design, Lorem ipsum is a placeholder text
+          commonly used to demonstrate the visual form of a document or a
+          typeface without.
+        </p>
+        <div className="flex items-center max-w-md w-full relative mt-2">
+          <input
+            type="text"
+            placeholder="Search"
+            className="p-5 rounded-full border-none w-full text-lg outline-none"
+          />
+          <button className="bg-[#FF890F] text-white p-4 rounded-full absolute right-0">
+            <FaSearch className="text-2xl" />
+          </button>
+        </div>
+      </div>
+
       <img
         src={piza}
         alt="Placeholder"
-        style={{
-          maxWidth: "600px",
-          height: "700px",
-          position: "absolute",
-          right: "0",
-          top: "2%",
-        }}
+        className="max-w-[600px] h-[700px] absolute right-0 top-2 lg:block hidden"
       />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "100px",
-          background:
-            "linear-gradient(to top, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%)",
-        }}
-      ></div>
+      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent"></div>
     </div>
   );
 };

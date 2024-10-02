@@ -13,12 +13,13 @@ import {
   TextField,
   MenuItem,
   Box,
+  Grid,
 } from "@mui/material";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import Sidebar from "../components/sideBar";
 import Navbar from "../components/navbar";
 import axios from "axios";
-import CombinedSidebarNavbar from "../components/sideBar";
+
 const Users = () => {
   const [data, setData] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -243,7 +244,6 @@ const Users = () => {
             style={{ cursor: "pointer", marginLeft: "10px", color: "blue" }}
             onClick={() => handleEditUser(params.row)}
           />
-
           <FaTrash
             style={{ cursor: "pointer", marginLeft: "10px", color: "red" }}
             onClick={() => handleDelete(params.row.id)}
@@ -254,34 +254,42 @@ const Users = () => {
   ];
 
   return (
-    <div style={{ height: "100vh", width: "100%", backgroundColor: "#f0f0f0" }}>
-      <CombinedSidebarNavbar />
-      <Paper
-        elevation={3}
-        className="p-4"
-        style={{ margin: "50px auto", marginLeft: "420px", width: "70%" }}
-      >
-        <Typography variant="h4" gutterBottom>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#FF8100",
-              "&:hover": { backgroundColor: "#e07b00" },
-            }}
-            onClick={() => setOpen(true)} // Open modal
-          >
-            Add User
-          </Button>
-        </Typography>
-        {message && <Typography color="error">{message}</Typography>}
-        <DataGrid
-          rows={data}
-          columns={columns}
-          pageSize={5}
-          headerClassName="light-red-header"
-          disableSelectionOnClick
-        />
-      </Paper>
+    <div style={{ width: "100%", height: "100vh", backgroundColor: "#f0f0f0" }}>
+      <Sidebar />
+      <div className="flex-1 overflow-auto p-4 md:ml-60">
+        <Navbar />
+        <Paper
+          elevation={3}
+          className="p-4 mx-auto lg:ml-94"
+          style={{
+            marginTop: "20px",
+            width: "90%",
+            maxWidth: "1100px",
+          }}
+        >
+          <Typography variant="h4" gutterBottom>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#FF8100",
+                "&:hover": { backgroundColor: "#e07b00" },
+              }}
+              onClick={() => setOpen(true)}
+            >
+              Add User
+            </Button>
+          </Typography>
+          {message && <Typography color="error">{message}</Typography>}
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSize={5}
+            headerClassName="light-red-header"
+            disableSelectionOnClick
+            autoHeight
+          />
+        </Paper>
+      </div>
 
       {/* Modal for adding user */}
       <Dialog
@@ -298,10 +306,6 @@ const Users = () => {
             variant="outlined"
             value={newUser.name}
             onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -310,10 +314,6 @@ const Users = () => {
             variant="outlined"
             value={newUser.email}
             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -324,10 +324,6 @@ const Users = () => {
             onChange={(e) =>
               setNewUser({ ...newUser, phoneNo: e.target.value })
             }
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -338,10 +334,6 @@ const Users = () => {
             onChange={(e) =>
               setNewUser({ ...newUser, location: e.target.value })
             }
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -353,10 +345,6 @@ const Users = () => {
             onChange={(e) =>
               setNewUser({ ...newUser, password: e.target.value })
             }
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <Box
             display="flex"
@@ -371,12 +359,7 @@ const Users = () => {
               variant="outlined"
               value={newUser.role}
               onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-              sx={{
-                width: "150px",
-                marginRight: 2,
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "green" },
-              }}
+              sx={{ width: "150px", marginRight: 2 }}
             >
               {roles.map((role) => (
                 <MenuItem key={role.value} value={role.value}>
@@ -389,7 +372,6 @@ const Users = () => {
               variant="contained"
               sx={{
                 width: "180px",
-                height: "42px",
                 backgroundColor: "#FF8100",
                 "&:hover": { backgroundColor: "#e07b00" },
               }}
@@ -415,10 +397,6 @@ const Users = () => {
             variant="outlined"
             value={newUser.name}
             onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -427,10 +405,6 @@ const Users = () => {
             variant="outlined"
             value={newUser.email}
             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -441,10 +415,6 @@ const Users = () => {
             onChange={(e) =>
               setNewUser({ ...newUser, phoneNo: e.target.value })
             }
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -455,10 +425,6 @@ const Users = () => {
             onChange={(e) =>
               setNewUser({ ...newUser, location: e.target.value })
             }
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           />
           <TextField
             margin="dense"
@@ -468,10 +434,6 @@ const Users = () => {
             variant="outlined"
             value={newUser.role}
             onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                { borderColor: "green" },
-            }}
           >
             {roles.map((role) => (
               <MenuItem key={role.value} value={role.value}>
@@ -490,7 +452,6 @@ const Users = () => {
               variant="contained"
               sx={{
                 width: "180px",
-                height: "42px",
                 backgroundColor: "#FF8100",
                 "&:hover": { backgroundColor: "#e07b00" },
               }}
@@ -504,8 +465,16 @@ const Users = () => {
       <style>
         {`
           .light-red-header .MuiDataGrid-colCell {
-            background-color: #D8D8D8FF; /* Light red color for header */
-            color: #000; /* Text color for header */
+            background-color: #D8D8D8FF;
+            color: #000;
+          }
+          @media (max-width: 600px) {
+            .MuiDataGrid-columnHeader {
+              font-size: 0.8rem;
+            }
+            .MuiDataGrid-cell {
+              font-size: 0.7rem;
+            }
           }
         `}
       </style>

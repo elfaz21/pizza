@@ -13,7 +13,7 @@ import logoImage from "../assets/logoImage.svg";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { setTitle } = useContext(MyContext);
+  const { setTitle, role } = useContext(MyContext);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -27,9 +27,9 @@ const Sidebar = () => {
     <div
       className={`fixed top-0 left-0 bottom-0 z-50 flex flex-col bg-white transition-all duration-500 ease-in-out ${
         isCollapsed ? "w-16" : "w-64"
-      }`}
+      } sidebar`}
     >
-      <div className="p-4 flex items-center justify-between">
+      <div className="p-4 flex items-center justify-between z-[1000]">
         <span className={`text-2xl font-bold ${isCollapsed ? "hidden" : ""}`}>
           Pizza
         </span>
@@ -46,54 +46,87 @@ const Sidebar = () => {
       </div>
 
       <div className={`flex flex-col space-y-2 ${isCollapsed ? "hidden" : ""}`}>
-        <NavLink
-          to="/"
-          onClick={() => handleLinkClick("Orders")}
-          className={({ isActive }) =>
-            `p-4 hover:bg-orange-100 flex items-center ${
-              isActive ? "text-orange-500 bg-orange-200" : ""
-            }`
-          }
-        >
-          <FaClipboardList className="w-6 h-6 mr-2" />
-          <span className={isCollapsed ? "hidden" : ""}>Orders</span>
-        </NavLink>
-        <NavLink
-          to="/add-menu"
-          onClick={() => handleLinkClick("Add Menu")}
-          className={({ isActive }) =>
-            `p-4 hover:bg-orange-100 flex items-center ${
-              isActive ? "text-orange-500 bg-orange-200" : ""
-            }`
-          }
-        >
-          <FaPlus className="w-6 h-6 mr-2" />
-          <span className={isCollapsed ? "hidden" : ""}>Add Menu</span>
-        </NavLink>
-        <NavLink
-          to="/add-role"
-          onClick={() => handleLinkClick("Role")}
-          className={({ isActive }) =>
-            `p-4 hover:bg-orange-100 flex items-center ${
-              isActive ? "text-orange-500 bg-orange-200" : ""
-            }`
-          }
-        >
-          <FaUserShield className="w-6 h-6 mr-2" />
-          <span className={isCollapsed ? "hidden" : ""}>Role</span>
-        </NavLink>
-        <NavLink
-          to="/users"
-          onClick={() => handleLinkClick("User")}
-          className={({ isActive }) =>
-            `p-4 hover:bg-orange-100 flex items-center ${
-              isActive ? "text-orange-500 bg-orange-200" : ""
-            }`
-          }
-        >
-          <FaUsers className="w-6 h-6 mr-2" />
-          <span className={isCollapsed ? "hidden" : ""}>User</span>
-        </NavLink>
+        {role === "SuperAdmin" && (
+          <>
+            <NavLink
+              to="/"
+              onClick={() => handleLinkClick("Orders")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaClipboardList className="w-6 h-6 mr-2" />
+              <span className={isCollapsed ? "hidden" : ""}>Orders</span>
+            </NavLink>
+            <NavLink
+              to="/add-menu"
+              onClick={() => handleLinkClick("Add Menu")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaPlus className="w-6 h-6 mr-2" />
+              <span className={isCollapsed ? "hidden" : ""}>Add Menu</span>
+            </NavLink>
+            <NavLink
+              to="/add-role"
+              onClick={() => handleLinkClick("Role")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaUserShield className="w-6 h-6 mr-2" />
+              <span className={isCollapsed ? "hidden" : ""}>Role</span>
+            </NavLink>
+            <NavLink
+              to="/users"
+              onClick={() => handleLinkClick("User")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaUsers className="w-6 h-6 mr-2" />
+              <span className={isCollapsed ? "hidden" : ""}>User</span>
+            </NavLink>
+          </>
+        )}
+
+        {role !== "SuperAdmin" && (
+          <>
+            <NavLink
+              to="/"
+              onClick={() => handleLinkClick("Orders")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaClipboardList className="w-6 h-6 mr-2" />
+              <span className={isCollapsed ? "hidden" : ""}>Orders</span>
+            </NavLink>
+            <NavLink
+              to="/add-menu"
+              onClick={() => handleLinkClick("Add Menu")}
+              className={({ isActive }) =>
+                `p-4 hover:bg-orange-100 flex items-center ${
+                  isActive ? "text-orange-500 bg-orange-200" : ""
+                }`
+              }
+            >
+              <FaPlus className="w-6 h-6 mr-2" />
+              <span className={isCollapsed ? "hidden" : ""}>Add Menu</span>
+            </NavLink>
+          </>
+        )}
       </div>
 
       <NavLink
@@ -107,7 +140,6 @@ const Sidebar = () => {
         <span className={isCollapsed ? "hidden" : ""}>Logout</span>
       </NavLink>
 
-      {/* Always Display Icons Even When Collapsed */}
       <div
         className={`flex flex-col space-y-2 ${isCollapsed ? "w-16" : "hidden"}`}
       >
@@ -125,20 +157,24 @@ const Sidebar = () => {
         >
           <FaPlus className="w-6 h-6" />
         </NavLink>
-        <NavLink
-          to="/add-role"
-          onClick={() => handleLinkClick("Role")}
-          className="flex items-center p-4"
-        >
-          <FaUserShield className="w-6 h-6" />
-        </NavLink>
-        <NavLink
-          to="/users"
-          onClick={() => handleLinkClick("User")}
-          className="flex items-center p-4"
-        >
-          <FaUsers className="w-6 h-6" />
-        </NavLink>
+        {role === "SuperAdmin" && (
+          <>
+            <NavLink
+              to="/add-role"
+              onClick={() => handleLinkClick("Role")}
+              className="flex items-center p-4"
+            >
+              <FaUserShield className="w-6 h-6" />
+            </NavLink>
+            <NavLink
+              to="/users"
+              onClick={() => handleLinkClick("User")}
+              className="flex items-center p-4"
+            >
+              <FaUsers className="w-6 h-6" />
+            </NavLink>
+          </>
+        )}
         <NavLink
           to="/login"
           onClick={() => handleLinkClick("Logout")}
@@ -147,6 +183,16 @@ const Sidebar = () => {
           <FaSignOutAlt className="w-6 h-6" />
         </NavLink>
       </div>
+
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .sidebar {
+              display: none; /* Hide the sidebar completely on mobile */
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };

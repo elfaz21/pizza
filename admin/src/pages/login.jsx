@@ -63,7 +63,7 @@ const LoginComponent = () => {
       if (error instanceof z.ZodError) {
         const fieldErrors = {};
         error.errors.forEach((err) => {
-          fieldErrors[err.path[0]] = err.message; // Set error messages by field
+          fieldErrors[err.path[0]] = err.message;
         });
         setErrors(fieldErrors);
       } else {
